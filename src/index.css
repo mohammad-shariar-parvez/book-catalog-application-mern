@@ -34,7 +34,7 @@
   }
 
   small{
-    @apply text-[#FFFFFFB3] font-normal
+    @apply text-[#FFFFFFB3] font-normal text-[14px]
   }
 
 

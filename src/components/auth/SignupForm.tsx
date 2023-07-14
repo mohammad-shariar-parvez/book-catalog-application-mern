@@ -1,16 +1,17 @@
 import React from "react";
-import Input from "../atoms/Input";
-import Label from "../atoms/Label";
 
-const Signup = () => {
+import Label from "../atoms/Label";
+import Input from "../atoms/Input";
+
+const SignupForm = () => {
   return (
     <form>
-      <div className="relative z-0 w-full mb-6 group">
+      <div className="relative z-0 w-full mb-5 group">
         <Input
           type="email"
           name="floating_email"
           id="floating_email"
-          placeholder="Enter your email"
+          placeholder=""
           required
         />
 
@@ -73,27 +74,17 @@ const Signup = () => {
             placeholder=" "
             required
           />
-          <Label htmlFor="floating_phone">Phone number (123-456-7890)</Label>
-        </div>
-        <div className="relative z-0 w-full mb-6 group">
-          <Input
-            type="text"
-            name="floating_company"
-            id="floating_company"
-            placeholder=" "
-            required
-          />
-          <Label htmlFor="floating_company">Company (Ex. Google)</Label>
+          <Label htmlFor="floating_phone">Phone number </Label>
         </div>
       </div>
       <button
         type="submit"
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className="text-white bg-golden hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
-        Submit
+        Sign in
       </button>
     </form>
   );
 };
 
-export default Signup;
+export default SignupForm;

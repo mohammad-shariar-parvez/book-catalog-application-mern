@@ -61,14 +61,15 @@ export default function Navbar() {
 
           {/*  */}
           <Searchbar value={isFixedVisible} />
+
           {/* Part */}
           <div className="ml-auto flex gap-3 items-center">
             <div className="">
               <button
                 type="button"
-                className="text-golden font-semibold bg-white p-1 rounded shadow relative text-sm"
+                className="md:text-golden text-white font-bold  p-1 rounded shadow relative text-sm"
               >
-                <span className="absolute -top-2 bg-red-500 text-white rounded w-6 h-6 text-sm font-semibold">
+                <span className="absolute -top-2 left-6 bg-red-500 text-white rounded w-5 h-5 text-sm font-semibold rounded-full">
                   45
                 </span>
 
@@ -76,7 +77,7 @@ export default function Navbar() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  strokeWidth={1.5}
+                  strokeWidth={1}
                   stroke="currentColor"
                   className="w-6 h-6"
                 >
@@ -89,7 +90,7 @@ export default function Navbar() {
               </button>
             </div>
 
-            <div className="bg-golden text-white px-4 py-2 text-lg flex items-center gap-2 justify-center">
+            <div className=" text-white px-4 py-2 text-lg flex items-center gap-2 justify-center">
               <button onClick={handleButtonClick}>
                 <i className="bx bx-search"></i>
               </button>
@@ -123,6 +124,9 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
+      {isFixedVisible && (
+        <div className="mb-10 transition-opacity duration-200 ease-in-out"></div>
+      )}
     </>
   );
 }
