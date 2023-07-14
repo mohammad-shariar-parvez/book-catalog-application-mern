@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  darkMode: ['class'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -15,5 +16,6 @@ module.exports = {
       }, //e
     },
   },
-  plugins: [],
+  // eslint-disable-next-line no-undef
+
 };

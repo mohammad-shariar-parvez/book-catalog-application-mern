@@ -7,81 +7,78 @@
 
 
 @layer base {
-	html {
-		font-family: system-ui, sans-serif;
-	}
+  html {
+    font-family: system-ui, sans-serif;
+  }
 
-	h1 {
-		@apply leading-normal text-3xl md:text-6xl font-semibold tracking-wide
-	}
+  h1 {
+    @apply leading-normal text-3xl md:text-6xl font-semibold tracking-wide
+  }
 
-	h2 {
-		@apply text-black text-[40px] md:text-[50px] font-black leading-tight
-	}
+  h2 {
+    @apply text-black text-[40px] md:text-[50px] font-black leading-tight
+  }
 
+  h3 {
+    @apply text-golden font-bold text-3xl md:text-[40px] leading-loose
+  }
 
-	h3 {
-		@apply text-golden font-bold text-3xl md:text-[40px] leading-loose
-	}
+  h4 {
+    @apply text-black text-2xl leading-tight font-medium
+  }
+  h5 {
+    @apply text-black text-xl  font-semibold 
+  }
+  h6 {
+    @apply text-black text-lg leading-normal font-semibold 
+  }
 
-	h4 {
-		@apply text-black text-2xl leading-tight font-medium
-	}
-
-	h5 {
-		@apply text-black text-xl font-semibold
-	}
-
-	h6 {
-		@apply text-black text-lg leading-normal font-semibold
-	}
-
-	small {
-		@apply text-[#FFFFFFB3] font-normal
-	}
+  small{
+    @apply text-[#FFFFFFB3] font-normal
+  }
 
 
-	p {
-		@apply text-[17px] font-normal leading-loose text-[#666666]
-	}
+  p {
+    @apply text-[17px] font-normal leading-loose text-[#666666]
+  }
 
-	label {
-		@apply text-[17px] text-black font-semibold leading-loose
-	}
+  label {
+    @apply text-[17px] text-black font-semibold leading-loose
+  }
 }
 
 .app {
-	@apply text-gray-600
+  @apply text-gray-600
 }
 
 .wrapper {
-	@apply md:max-w-6xl mx-auto p-4 pb-32
+  @apply md:max-w-6xl mx-auto  p-4 pb-32
 }
 
-.container {
-	@apply md:max-w-6xl mx-auto
+.container{
+  @apply md:max-w-6xl mx-auto
 }
 
 .flex-center {
-	@apply flex justify-between items-center
+  @apply flex justify-between items-center
 }
 
 .nav-button {
-	@apply opacity-[1] font-normal md:py-3 md:p-5 transition ease-in-out text-sm text-gray-500
+  @apply opacity-[1] font-normal md:py-3 md:p-5 transition ease-in-out text-sm text-gray-500
 }
 
 .great-font {
-	@apply font-great text-golden leading-none
+  @apply font-great text-golden leading-none
 }
 
 .stats-strong {
-	@apply text-golden font-bold text-3xl md:text-[44px] leading-none
+  @apply text-golden font-bold text-3xl md:text-[44px] leading-none
 }
 
-.icon-bg {
-	@apply bg-neutral-700 p-1 rounded-full text-center
+.icon-bg{
+  @apply  bg-neutral-700 p-1 rounded-full text-center
 }
 
-.order-table-td {
-	@apply p-2 md:border text-left block md:table-cell
+.order-table-td{
+  @apply p-2 md:border text-left block md:table-cell
 }

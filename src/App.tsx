@@ -1,15 +1,8 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import Normal from "./components/Normal";
+import MainLayout from "./components/layouts/MainLayout";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <>
-      <h3>HEllo</h3>
-    </>
-  );
+  return <MainLayout />;
 }
 
 export default App;
