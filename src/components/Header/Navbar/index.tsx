@@ -18,9 +18,9 @@ export default function Navbar() {
   };
 
   console.log("USER IS", user);
-  useEffect(() => {
-    console.log("USER IS-----", user);
-  }, [dispatch, user]);
+  // useEffect(() => {
+  //   console.log("USER IS-----", user);
+  // }, [dispatch, user]);
 
   const changeBackground = () => {
     if (window.scrollY >= 80) {
@@ -105,7 +105,7 @@ export default function Navbar() {
               <button type="button" className="">
                 <i className="bx bxs-user-circle"></i>
               </button>
-              <small>ss</small>
+              <small>{user?.name.lastName}</small>
               {/* dropdown menus */}
               <div className="hidden group-hover:block absolute w-full transition">
                 <ul className="bg-white shadow-lg w-full p-2 flex flex-col gap-1">

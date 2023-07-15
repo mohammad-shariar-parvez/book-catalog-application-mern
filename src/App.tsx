@@ -1,7 +1,8 @@
-import Normal from "./components/Normal";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import MainLayout from "./components/layouts/MainLayout";
 
-function App() {
+function App(): JSX.Element {
   return <MainLayout />;
 }
 
