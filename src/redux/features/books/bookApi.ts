@@ -7,7 +7,7 @@ import { apiSlice } from "../api/apiSlice";
 export const bookApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBooks: builder.query({
-      query: () => "/videos",
+      query: () => "/books",
       keepUnusedDataFor: 600,
       providesTags: ["Books"],
     }),
@@ -30,11 +30,11 @@ export const bookApi = apiSlice.injectEndpoints({
         body: data,
       }),
       invalidatesTags: (result, error, arg) => [
-        "Videos",
-        { type: "Video", id: arg.id },
+        "Books",
+        { type: "Book", id: arg.id },
       ],
     }),
-    deleteVideo: builder.mutation({
+    deleteBook: builder.mutation({
       query: (id) => ({
         url: `/videos/${id}`,
         method: "DELETE",
@@ -43,3 +43,11 @@ export const bookApi = apiSlice.injectEndpoints({
     }),
   }),
 });
+
+export const {
+  useGetBooksQuery,
+  useGetSingleBookQuery,
+  useAddBookMutation,
+  useEditBookMutation,
+  useDeleteBookMutation,
+} = bookApi;
