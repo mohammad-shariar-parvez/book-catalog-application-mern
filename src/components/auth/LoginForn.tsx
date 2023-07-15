@@ -1,42 +1,83 @@
-import Label from "../atoms/Label";
+import React, { useState } from "react";
 import Input from "../atoms/Input";
 
-const LoginForm = () => {
+interface FormValues {
+  email: string;
+  password: string;
+}
+
+const initialFormValues: FormValues = {
+  email: "",
+  password: "",
+};
+
+const LoginForm: React.FC = () => {
+  const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
+  const [errors, setErrors] = useState<Partial<FormValues>>({});
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const validationErrors: Partial<FormValues> = {};
+
+    // Perform custom validation
+    if (formValues.email.trim() === "") {
+      validationErrors.email = "Email is required";
+    }
+    if (formValues.password.trim() === "") {
+      validationErrors.password = "Password is required";
+    }
+    // If there are errors, set them and return
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    // Registration logic here...
+    console.log("Registration form submitted:", formValues);
+    // Reset the form
+    setFormValues(initialFormValues);
+  };
+
   return (
-    <form>
-      <div className="relative z-0 w-full mb-6 group">
+    <form onSubmit={handleSubmit} className="max-w-xs mx-auto">
+      <div>
         <Input
+          label="Email:"
+          name="email"
           type="email"
-          name="floating_email"
-          id="floating_email"
-          placeholder=""
+          value={formValues.email}
+          error={errors.email}
           required
+          onChange={handleChange}
         />
-
-        <Label
-          htmlFor="floating_email"
-          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >
-          Email address
-        </Label>
       </div>
       <div className="relative z-0 w-full mb-6 group">
         <Input
+          label="Password:"
+          name="password"
           type="password"
-          name="floating_password"
-          id="floating_password"
-          placeholder=" "
+          value={formValues.password}
+          error={errors.password}
           required
+          onChange={handleChange}
         />
-        <Label htmlFor="floating_password">Password</Label>
       </div>
 
-      <button
-        type="submit"
-        className="text-white bg-golden hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      >
-        Login
-      </button>
+      <div className="gap-x-6 space-x-6">
+        <button
+          type="submit"
+          className="text-white bg-golden hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  "
+        >
+          Sign in
+        </button>
+      </div>
     </form>
   );
 };
