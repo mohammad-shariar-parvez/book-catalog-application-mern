@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useState } from "react";
 import Input from "../atoms/Input";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
 
 interface FormValues {
   email: string;
@@ -12,6 +14,7 @@ const initialFormValues: FormValues = {
 };
 
 const LoginForm: React.FC = () => {
+  const [login, { data, isLoading, error: responseError }] = useLoginMutation();
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
 
@@ -22,6 +25,7 @@ const LoginForm: React.FC = () => {
       [name]: value,
     }));
   };
+  console.log("LOGIN DAAATA", data);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,8 +44,12 @@ const LoginForm: React.FC = () => {
       return;
     }
     // Registration logic here...
-    console.log("Registration form submitted:", formValues);
+    console.log("Login form submitted:", formValues);
     // Reset the form
+    void login({
+      email: formValues.email,
+      password: formValues.password,
+    });
     setFormValues(initialFormValues);
   };
 

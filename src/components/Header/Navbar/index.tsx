@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavLinks from "../Navlink";
 import { Link } from "react-router-dom";
 import Searchbar from "../Searchbar";
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 
 export default function Navbar() {
+  const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
   const [navbar, setNavbar] = useState(false);
 
   const [isFixedVisible, setIsFixedVisible] = useState(false);
@@ -13,6 +16,11 @@ export default function Navbar() {
   const handleButtonClick = () => {
     setIsFixedVisible(!isFixedVisible);
   };
+
+  console.log("USER IS", user);
+  useEffect(() => {
+    console.log("USER IS-----", user);
+  }, [dispatch, user]);
 
   const changeBackground = () => {
     if (window.scrollY >= 80) {
