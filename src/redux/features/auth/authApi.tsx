@@ -3,9 +3,9 @@ import { apiSlice } from "../api/apiSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    register: builder.mutation({
+    signup: builder.mutation({
       query: (data) => ({
-        url: "/register",
+        url: "/api/v1/auth/signup",
         method: "POST",
         body: data,
       }),
@@ -20,4 +20,4 @@ export const authApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useSignupMutation } = authApi;
