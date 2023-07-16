@@ -11,13 +11,32 @@ export const bookApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
       providesTags: ["Books"],
     }),
+
+    // getFilteredBooks: builder.query({
+    //   query: ({ search, genre, publicationDate }) => {
+    //     let queryUrl = "";
+    //     if (search) {
+    //       // console.log("SEARCH from Mmain", sort);
+    //       queryUrl += `searchTerm=${search}`;
+    //     }
+    //     if (genre) {
+    //       queryUrl += `&genre=${genre}`;
+    //     }
+    //     if (publicationDate) {
+    //       queryUrl += `&publicationDate=${publicationDate}`;
+    //     }
+    //     return `/jobs/?${encodeURI(queryUrl)}`;
+    //   },
+    //   invalidatesTags: ["Books"],
+    // }),
+
     getSingleBook: builder.query({
-      query: (id) => `/product/${id}`,
+      query: (id) => `/books/${id}`,
       providesTags: (result, error, arg) => [{ type: "Book", id: arg }],
     }),
     addBook: builder.mutation({
       query: (data) => ({
-        url: "/videos",
+        url: "/add-book",
         method: "POST",
         body: data,
       }),
@@ -25,7 +44,7 @@ export const bookApi = apiSlice.injectEndpoints({
     }),
     editBook: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/videos/${id}`,
+        url: `/${id}`,
         method: "PATCH",
         body: data,
       }),
@@ -36,7 +55,7 @@ export const bookApi = apiSlice.injectEndpoints({
     }),
     deleteBook: builder.mutation({
       query: (id) => ({
-        url: `/videos/${id}`,
+        url: `/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Books"],
@@ -50,4 +69,5 @@ export const {
   useAddBookMutation,
   useEditBookMutation,
   useDeleteBookMutation,
+  useGetFilteredBooksQuery,
 } = bookApi;
