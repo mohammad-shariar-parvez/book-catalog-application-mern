@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 const Searchbar = ({ value }) => {
-  console.log("value is", value);
+  // console.log("value is", value);
 
   return (
     <div className="relative">

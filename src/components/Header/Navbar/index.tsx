@@ -17,7 +17,7 @@ export default function Navbar() {
     setIsFixedVisible(!isFixedVisible);
   };
 
-  console.log("USER IS", user);
+  // console.log("USER IS", user);
   // useEffect(() => {
   //   console.log("USER IS-----", user);
   // }, [dispatch, user]);

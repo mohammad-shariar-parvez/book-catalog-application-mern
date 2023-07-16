@@ -28,7 +28,7 @@ const Home = () => {
   //     queryUrl += `&publicationDate=${publicationDate}`;
   //   }
 
-  console.log("BOOOKS", data);
+  // console.log("BOOOKS hooome", data);
 
   return (
     <div>

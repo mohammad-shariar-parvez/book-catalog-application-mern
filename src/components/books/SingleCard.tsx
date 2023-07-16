@@ -1,6 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 
-const SingleCard = () => {
+interface IBook {
+  id: string;
+  title: string;
+  author: string;
+  genre: string;
+  publicationDate: string;
+  image: string;
+  reviews: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
+  __v: number;
+  _id: string;
+}
+
+interface IProps {
+  product: IBook;
+}
+
+const SingleCard = ({ book }: IProps) => {
   return (
     <div className=" ">
       <a
@@ -14,10 +35,21 @@ const SingleCard = () => {
         />
 
         <div className="text-left text-lg p-3 flex-col  justify-between md:flex-col  self-start  ">
-          <h5 className="mb-2  ">Noteworthy technology acquisitions</h5>
-          <p className="mb-3 text-sm">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
+          <h5 className="mb-2  ">{book.title}</h5>
+          <p>
+            <span className="text-black font-semibold">Author:</span>
+            {book.author}
+          </p>
+          <p className=" ">
+            <span className="text-black font-semibold">Genre:</span>{" "}
+            {book.genre}
+          </p>
+          <p className="">
+            {" "}
+            <span className="text-black font-semibold">
+              Publication Date
+            </span>{" "}
+            {book.publicationDate}
           </p>
         </div>
       </a>
