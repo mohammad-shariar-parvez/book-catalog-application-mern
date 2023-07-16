@@ -5,6 +5,7 @@ import {
   useGetBooksQuery,
   useGetFilteredBooksQuery,
 } from "../../redux/features/books/bookApi";
+import BookCard from "../books/BookCard";
 
 const Home = () => {
   const [queryUrl, setQueryUrl] = useState("");
@@ -29,7 +30,11 @@ const Home = () => {
 
   console.log("BOOOKS", data);
 
-  return <div>Home</div>;
+  return (
+    <div>
+      <BookCard />
+    </div>
+  );
 };
 
 export default Home;
