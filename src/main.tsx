@@ -13,10 +13,10 @@ import store from "./redux/store.ts";
 import { useAppDispatch } from "./redux/hook.ts";
 import { userLoggedIn } from "./redux/features/auth/authSlice.tsx";
 
-const userData = JSON.parse(localStorage.getItem("auth") || "");
-if (userData.accessToken && userData.user) {
-  store.dispatch(userLoggedIn(userData));
-}
+// const userData = JSON.parse(localStorage.getItem("auth") || "");
+// if (userData.accessToken && userData.user) {
+//   store.dispatch(userLoggedIn(userData));
+// }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

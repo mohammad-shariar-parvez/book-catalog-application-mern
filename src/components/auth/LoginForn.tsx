@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "../atoms/Input";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
-
+import { useNavigate } from "react-router-dom";
 interface FormValues {
   email: string;
   password: string;
@@ -14,7 +15,8 @@ const initialFormValues: FormValues = {
 };
 
 const LoginForm: React.FC = () => {
-  const [login, { data, isLoading, error: responseError }] = useLoginMutation();
+  const [login, { data, isLoading, error: responseError, isSuccess }] =
+    useLoginMutation();
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
 
@@ -25,6 +27,17 @@ const LoginForm: React.FC = () => {
       [name]: value,
     }));
   };
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    // if (responseError?.data) {
+    //     setError(responseError.data);
+    // }
+    if (isSuccess && data?.data) {
+      navigate("/");
+    }
+  }, [data, responseError, navigate, isSuccess]);
+
   console.log("LOGIN DAAATA", data);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

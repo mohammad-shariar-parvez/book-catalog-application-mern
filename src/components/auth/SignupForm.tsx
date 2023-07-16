@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "../atoms/Input";
 import { useSignupMutation } from "../../redux/features/auth/authApi";
+import { useNavigate } from "react-router-dom";
 
 interface FormValues {
   firstName: string;
@@ -20,7 +22,7 @@ const initialFormValues: FormValues = {
 };
 
 const SignupForm: React.FC = () => {
-  const [signup, { data, isLoading, error: responseError }] =
+  const [signup, { data, isLoading, error: responseError, isSuccess }] =
     useSignupMutation();
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
@@ -32,7 +34,16 @@ const SignupForm: React.FC = () => {
       [name]: value,
     }));
   };
-  console.log("baireer mal", data);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    // if (responseError?.data) {
+    //     setError(responseError.data);
+    // }
+    if (isSuccess && data?.data) {
+      navigate("/");
+    }
+  }, [data, responseError, navigate, isSuccess]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

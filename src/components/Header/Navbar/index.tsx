@@ -16,10 +16,10 @@ export default function Navbar() {
   const handleButtonClick = () => {
     setIsFixedVisible(!isFixedVisible);
   };
+  // console.log("USER IS-----", user);
 
   // console.log("USER IS", user);
   // useEffect(() => {
-  //   console.log("USER IS-----", user);
   // }, [dispatch, user]);
 
   const changeBackground = () => {

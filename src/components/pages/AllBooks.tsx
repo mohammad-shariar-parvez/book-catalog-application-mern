@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from "react";
-import SingleCard from "./SingleCard";
+
 import { useGetBooksQuery } from "../../redux/features/books/bookApi";
+import SingleCard from "../books/SingleCard";
 
 interface IBook {
   id: string;
@@ -20,23 +21,24 @@ interface IBook {
   _id: string;
 }
 
-const BookCard = () => {
+const AllBooks = () => {
   const [queryUrl, setQueryUrl] = useState("");
   const { data, isLoading, error } = useGetBooksQuery(undefined);
-  const firstTenBooks: IBook[] = data ? data.data.slice(0, 2) : [];
-  console.log("BOOOKS", data);
+  const books: IBook[] = data ? data["data"] : [];
+  //   const { data } = data;
+
   return (
     <section className="wrapper  ">
       <div className="grid grid-cols-1  md:grid-cols-2 gap-4 pt-24 md:pt-6 ">
-        {firstTenBooks.map((book: IBook) => (
+        {books.map((book: IBook) => (
           <SingleCard key={book.id} book={book} />
         ))}
         {/* {data.data ? data.data.slice(0, 10).map((book:IBook) => (
-          <SingleCard key={book.id } book={book} />
-        ))} */}
+		  <SingleCard key={book.id } book={book} />
+		))} */}
       </div>
     </section>
   );
 };
 
-export default BookCard;
+export default AllBooks;

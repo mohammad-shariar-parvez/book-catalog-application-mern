@@ -4,7 +4,7 @@ const NavLinks = ({ value }) => {
   const Links = [
     {
       name: "All Books",
-      link: "/",
+      link: "/allbooks",
       icon: "bx bx-info-circle",
     },
   ];
