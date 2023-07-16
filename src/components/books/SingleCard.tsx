@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface IBook {
   id: string;
@@ -22,14 +24,16 @@ interface IProps {
 }
 
 const SingleCard = ({ book }: IProps) => {
+  console.log("BOOK IDDDDDDD", book.id);
+
   return (
     <div className=" ">
-      <a
-        href="#"
+      <Link
+        to={`/${book.id}`}
         className="flex  items-center bg-white border border-gray-200 rounded-lg shadow flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700  "
       >
         <img
-          className="object-cover w-full rounded-lg md:rounded-none md:rounded-l-lg h-48  md:h-auto md:w-48"
+          className="object-cover  w-1/2 rounded-lg md:rounded-none md:rounded-l-lg h-48  md:h-auto md:w-48"
           src="https://m.media-amazon.com/images/I/51Ga5GuElyL._SX331_BO1,204,203,200_.jpg"
           alt=""
         />
@@ -52,7 +56,7 @@ const SingleCard = ({ book }: IProps) => {
             {book.publicationDate}
           </p>
         </div>
-      </a>
+      </Link>
     </div>
   );
 };

@@ -69,5 +69,4 @@ export const {
   useAddBookMutation,
   useEditBookMutation,
   useDeleteBookMutation,
-  useGetFilteredBooksQuery,
 } = bookApi;
