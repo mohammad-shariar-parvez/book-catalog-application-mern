@@ -23,7 +23,7 @@ interface IBook {
 const BookCard = () => {
   const [queryUrl, setQueryUrl] = useState("");
   const { data, isLoading, error } = useGetBooksQuery(undefined);
-  const firstTenBooks: IBook[] = data ? data.data.slice(0, 2) : [];
+  const firstTenBooks: IBook[] = data ? data.data.slice(0, 10) : [];
   console.log("BOOOKS", data);
   return (
     <section className="wrapper  ">

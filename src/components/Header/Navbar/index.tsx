@@ -98,13 +98,44 @@ export default function Navbar() {
               </button>
             </div>
 
-            <div className=" text-white px-4 py-2 text-lg flex items-center gap-2 justify-center">
+            <div className=" text-white  py-2 text-lg flex items-center gap-2 justify-center">
               <button onClick={handleButtonClick}>
-                <i className="bx bx-search"></i>
+                <i className="bx bx-search md:hidden"></i>
               </button>
               <button type="button" className="">
                 <i className="bx bxs-user-circle"></i>
               </button>
+
+              {user?.email ? (
+                <button className=" hover:text-yellow-600  ">
+                  <Link
+                    className={` ${
+                      navbar
+                        ? " md:text-black  nav-button  "
+                        : " md:text-white  nav-button     "
+                    }hover:text-yellow-500  flex flex-col items-center `}
+                    to="/login"
+                  >
+                    Logout
+                  </Link>
+                  {/* <i class="bx bxs-log-in-circle"></i> */}
+                </button>
+              ) : (
+                <button className=" hover:text-yellow-600  ">
+                  <Link
+                    className={` ${
+                      navbar
+                        ? " md:text-black  nav-button  "
+                        : " md:text-white  nav-button     "
+                    }hover:text-yellow-500  flex flex-col items-center `}
+                    to="/login"
+                  >
+                    Login
+                  </Link>
+                  {/* <i class="bx bxs-log-in-circle"></i> */}
+                </button>
+              )}
+
               <small>{user?.name.lastName}</small>
               {/* dropdown menus */}
               <div className="hidden group-hover:block absolute w-full transition">

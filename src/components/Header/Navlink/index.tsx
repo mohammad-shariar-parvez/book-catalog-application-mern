@@ -35,10 +35,10 @@ const NavLinks = ({ value }) => {
         <Link
           className={`${
             value ? "  md:rounded-none  " : "   rounded-lg  "
-          } ' text-white  bg-golden p-3  hover:opacity-80 rounded-lg  `}
-          href="/"
+          } ' text-white  bg-golden p-2  hover:opacity-80 rounded-lg  `}
+          to="/"
         >
-          Book Table
+          Add Book
         </Link>
       </li>
     </>

@@ -41,7 +41,7 @@ const SignupForm: React.FC = () => {
     //     setError(responseError.data);
     // }
     if (isSuccess && data?.data) {
-      navigate("/");
+      navigate("/login");
     }
   }, [data, responseError, navigate, isSuccess]);
 
