@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { useState } from "react";
 
 import { useGetBooksQuery } from "../../redux/features/books/bookApi";
 import SingleCard from "../books/SingleCard";
@@ -22,8 +21,8 @@ interface IBook {
 }
 
 const AllBooks = () => {
-  const [queryUrl, setQueryUrl] = useState("");
-  const { data, isLoading, error } = useGetBooksQuery(undefined);
+  // const [queryUrl, setQueryUrl] = useState("");
+  const { data } = useGetBooksQuery(undefined);
   const books: IBook[] = data ? data["data"] : [];
   //   const { data } = data;
 

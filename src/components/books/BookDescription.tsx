@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hook";
 
@@ -14,7 +13,7 @@ interface IBook {
   genre: string;
   publicationDate: string;
   image: string;
-  reviews: string;
+  reviews: string[];
   createdAt: string;
   updatedAt: string;
   userId: string;
@@ -25,16 +24,16 @@ interface BookDescriptionProps {
   book: IBook;
 }
 
-const BookDescription = ({ book }) => {
+const BookDescription = ({ book }: BookDescriptionProps) => {
   const { user } = useAppSelector((state) => state.auth);
   // console.log("finallll", user);
-  console.log("BOOKSD", book?.data.id);
+  console.log("BOOKSD", book);
 
   return (
     <div>
       <div className=" ">
         <Link
-          to={`/${book?.data.id}`}
+          to={`/${book?.id}`}
           className="flex  items-center bg-white border border-gray-200 rounded-lg shadow flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700  "
         >
           <img
@@ -44,32 +43,32 @@ const BookDescription = ({ book }) => {
           />
 
           <div className="text-left text-lg p-3 flex-col  justify-between md:flex-col  self-start  ">
-            <h5 className="mb-2  ">{book?.data.title}</h5>
+            <h5 className="mb-2  ">{book?.title}</h5>
             <p>
               <span className="text-black font-semibold">Author:</span>
-              {book?.data.author}
+              {book?.author}
             </p>
             <p className=" ">
               <span className="text-black font-semibold">Genre:</span>{" "}
-              {book?.data.genre}
+              {book?.genre}
             </p>
             <p className="">
               <span className="text-black font-semibold">Publication Date</span>{" "}
-              {book?.data.publicationDate}
+              {book?.publicationDate}
             </p>
             <div className="flex items-center space-x-6 justify-center ">
-              {user.userId != book?.data.id && (
+              {user?.userId != book?.id && (
                 <Link
                   className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80 rounded-lg  "
-                  to={`/editBook/${book?.data.id}`}
+                  to={`/editBook/${book?.id}`}
                 >
                   Edit Book
                 </Link>
               )}
-              {user.userId != book?.data.id && (
+              {user?.userId != book?.id && (
                 <Link
                   className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80 rounded-lg  "
-                  to={`/deleteBook/${book?.data.id}`}
+                  to={`/deleteBook/${book?.id}`}
                 >
                   Delete Book
                 </Link>
@@ -82,11 +81,8 @@ const BookDescription = ({ book }) => {
       <div className="py-11">
         <h2>User Reviews</h2>
         <div className="space-y-4 pt-8">
-          {book.data.reviews.map((review) => (
-            <div
-              key={book?.data.id}
-              className="p-4 border rounded-lg shadow-md"
-            >
+          {book.reviews.map((review) => (
+            <div key={book?.id} className="p-4 border rounded-lg shadow-md">
               <p className="text-gray-700 font-medium text-lg mb-2">{review}</p>
             </div>
           ))}

@@ -8,7 +8,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useAddBookMutation } from "../../redux/features/books/bookApi";
 import { useAppSelector } from "../../redux/hook";
-import TextInput from "../atoms/TextInput";
 import Input from "../atoms/Input";
 import { useNavigate } from "react-router-dom";
 import Toast from "../atoms/Toaster";
@@ -31,16 +30,15 @@ const initialFormValues: FormValues = {
 };
 
 const AddBook = () => {
-  const [addBook, { data: book, isLoading, isError, isSuccess }] =
-    useAddBookMutation();
+  const [addBook, { data: book, isError, isSuccess }] = useAddBookMutation();
   const { user } = useAppSelector((state) => state.auth);
 
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
 
-  console.log("finallll", user.id);
-  console.log("BOOKSD", user.id);
-  console.log("isSuccess", isSuccess);
+  //   console.log("finallll", user?.id);
+  //   console.log("BOOKSD", user?.id);
+  //   console.log("isSuccess", isSuccess);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -56,9 +54,9 @@ const AddBook = () => {
       navigate("/");
     }
   }, [navigate, isSuccess]);
-  console.log("ussse state", formValues);
+  //   console.log("ussse state", formValues);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const validationErrors: Partial<FormValues> = {};
 
@@ -79,7 +77,7 @@ const AddBook = () => {
       validationErrors.image = "image is required";
     }
 
-    console.log("ussse state", formValues);
+    // console.log("ussse state", formValues);
 
     void addBook({
       title: formValues.title,

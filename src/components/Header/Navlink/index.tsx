@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const NavLinks = ({ value }) => {
+const NavLinks = ({ value }: { value: boolean }) => {
   const Links = [
     {
       name: "All Books",

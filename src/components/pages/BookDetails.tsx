@@ -7,27 +7,12 @@ import Loader from "../atoms/Loader";
 import ErrorMessage from "../atoms/Error";
 import BookDescription from "../books/BookDescription";
 
-interface IBook {
-  id: string;
-  title: string;
-  author: string;
-  genre: string;
-  publicationDate: string;
-  image: string;
-  reviews: string;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  __v: number;
-  _id: string;
-}
-
 const BookDetails = () => {
   const { id } = useParams();
   const { data: book, isLoading, isError } = useGetSingleBookQuery(id);
 
-  console.log("VIDEO id", id);
-  console.log("VIDEO SINGLEEE", book);
+  // console.log("VIDEO id", id);
+  // console.log("VIDEO SINGLEEE", book);
 
   let content = null;
   if (isLoading) {
@@ -45,7 +30,7 @@ const BookDetails = () => {
     content = (
       <section className="wrapper  ">
         <div className=" gap-4 pt-24 md:pt-6 flex items-center justify-center  ">
-          <BookDescription book={book} />
+          <BookDescription book={book.data} />
         </div>
       </section>
     );

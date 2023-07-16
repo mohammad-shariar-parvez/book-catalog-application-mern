@@ -15,8 +15,7 @@ const initialFormValues: FormValues = {
 };
 
 const LoginForm: React.FC = () => {
-  const [login, { data, isLoading, error: responseError, isSuccess }] =
-    useLoginMutation();
+  const [login, { data, error: responseError, isSuccess }] = useLoginMutation();
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
 
@@ -38,7 +37,7 @@ const LoginForm: React.FC = () => {
     }
   }, [data, responseError, navigate, isSuccess]);
 
-  console.log("LOGIN DAAATA", data);
+  // console.log("LOGIN DAAATA", data);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

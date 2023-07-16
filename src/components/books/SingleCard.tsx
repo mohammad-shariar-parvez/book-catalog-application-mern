@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from "react";
 import { Link } from "react-router-dom";
 
 interface IBook {
@@ -20,7 +19,7 @@ interface IBook {
 }
 
 interface IProps {
-  product: IBook;
+  book: IBook;
 }
 
 const SingleCard = ({ book }: IProps) => {

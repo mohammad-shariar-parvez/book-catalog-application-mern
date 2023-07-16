@@ -22,7 +22,7 @@ const initialFormValues: FormValues = {
 };
 
 const SignupForm: React.FC = () => {
-  const [signup, { data, isLoading, error: responseError, isSuccess }] =
+  const [signup, { data, error: responseError, isSuccess }] =
     useSignupMutation();
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
@@ -71,7 +71,7 @@ const SignupForm: React.FC = () => {
       setErrors(validationErrors);
       return;
     }
-    const updatedUser = {};
+
     // console.log("Registration form submitted:", formValues);
 
     //send to reducer

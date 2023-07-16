@@ -6,17 +6,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
-  useAddBookMutation,
+  useEditBookMutation,
   useGetSingleBookQuery,
 } from "../../redux/features/books/bookApi";
 import { useAppSelector } from "../../redux/hook";
-import TextInput from "../atoms/TextInput";
 import Input from "../atoms/Input";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Toast from "../atoms/Toaster";
-import ErrorMessage from "../atoms/Error";
 
 interface FormValues {
   title: string;
@@ -28,19 +26,17 @@ interface FormValues {
 
 const EditBook = () => {
   const { id } = useParams();
-  const {
-    data: book,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useGetSingleBookQuery(id);
+  const { data: book, isSuccess } = useGetSingleBookQuery(id);
 
   const { user } = useAppSelector((state) => state.auth);
+  const [editBook, { data: editedbook, isSuccess: editedbookSuccess }] =
+    useEditBookMutation();
 
   const [formValues, setFormValues] = useState<Partial<FormValues>>(book?.data);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
 
-  console.log("finallll", book);
+  console.log("edited books", editedbook);
+  console.log("Book Success", editedbookSuccess);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,7 +46,7 @@ const EditBook = () => {
     }));
   };
 
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
   //   useEffect(() => {
   //     if (isSuccess && book?.data) {
   //       navigate("/");
@@ -58,7 +54,7 @@ const EditBook = () => {
   //   }, [navigate, isSuccess]);
   //   console.log("ussse state", formValues);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const validationErrors: Partial<FormValues> = {};
 
@@ -79,16 +75,18 @@ const EditBook = () => {
       validationErrors.image = "image is required";
     }
 
-    // console.log("ussse state", formValues);
-
-    void addBook({
-      title: formValues.title,
-      author: formValues.author,
-      genre: formValues.genre,
-      publicationDate: formValues.publicationDate,
-      image: formValues.image,
-      userId: user?.id,
+    void editBook({
+      id: id,
+      data: {
+        title: formValues.title,
+        author: formValues.author,
+        genre: formValues.genre,
+        publicationDate: formValues.publicationDate,
+        image: formValues.image,
+        userId: user?.id,
+      },
     });
+    console.log("ussse state", formValues);
 
     // Reset form fields to initial values
     setFormValues(formValues);
@@ -107,7 +105,7 @@ const EditBook = () => {
             label="Title:"
             name="title"
             type="text"
-            value={formValues.title}
+            value={formValues.title!}
             error={errors.title}
             required
             onChange={handleChange}
@@ -118,7 +116,7 @@ const EditBook = () => {
             label="Author:"
             name="author"
             type="text"
-            value={formValues.author}
+            value={formValues.author!}
             error={errors.author}
             required
             onChange={handleChange}
@@ -130,7 +128,7 @@ const EditBook = () => {
           label="Grnre:"
           name="genre"
           type="text"
-          value={formValues.genre}
+          value={formValues.genre!}
           error={errors.genre}
           required
           onChange={handleChange}
@@ -141,7 +139,7 @@ const EditBook = () => {
           label="PublicationDate:"
           name="publicationDate"
           type="date"
-          value={formValues.publicationDate}
+          value={formValues.publicationDate!}
           error={errors.publicationDate}
           required
           onChange={handleChange}
@@ -152,7 +150,7 @@ const EditBook = () => {
           label="Image:"
           name="image"
           type="text"
-          value={formValues.image}
+          value={formValues.image!}
           error={errors.image}
           required
           onChange={handleChange}

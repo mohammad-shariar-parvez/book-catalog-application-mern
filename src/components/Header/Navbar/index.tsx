@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import NavLinks from "../Navlink";
 import { Link } from "react-router-dom";
 import Searchbar from "../Searchbar";
-import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+import { useAppSelector } from "../../../redux/hook";
 
 export default function Navbar() {
   const { user } = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
   const [navbar, setNavbar] = useState(false);
 
   const [isFixedVisible, setIsFixedVisible] = useState(false);

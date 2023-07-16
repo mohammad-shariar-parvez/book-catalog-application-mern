@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
 
-const Searchbar = ({ value }) => {
+const Searchbar = ({ value }: { value: boolean }) => {
   // console.log("value is", value);
 
   return (

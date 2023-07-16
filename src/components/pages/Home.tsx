@@ -1,15 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import { useState } from "react";
-import {
-  useGetBooksQuery,
-  useGetFilteredBooksQuery,
-} from "../../redux/features/books/bookApi";
 import BookCard from "../books/BookCard";
 
 const Home = () => {
-  const [queryUrl, setQueryUrl] = useState("");
-  const { data, isLoading, error } = useGetBooksQuery(undefined);
   // const { data, isLoading, error } = useGetFilteredBooksQuery();
 
   // const handleSearch = ()=>{

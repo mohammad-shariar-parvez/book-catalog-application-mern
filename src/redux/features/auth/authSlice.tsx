@@ -13,6 +13,7 @@ interface User {
   updatedAt: string;
   __v: number;
   _id: string;
+  userId: string;
 }
 interface AuthState {
   accessToken?: string;
@@ -32,8 +33,6 @@ const authSlice = createSlice({
       state,
       action: PayloadAction<{ accessToken: string; user: User }>,
     ) => {
-      console.log("aaaaaaa", action.payload);
-
       state.accessToken = action.payload.accessToken;
       state.user = action.payload.user;
     },
