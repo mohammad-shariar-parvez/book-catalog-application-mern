@@ -36,7 +36,7 @@ const NavLinks = ({ value }) => {
           className={`${
             value ? "  md:rounded-none  " : "   rounded-lg  "
           } ' text-white  bg-golden p-2  hover:opacity-80 rounded-lg  `}
-          to="/"
+          to="/addBook"
         >
           Add Book
         </Link>

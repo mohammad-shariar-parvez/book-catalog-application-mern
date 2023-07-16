@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../redux/hook";
 
 interface IBook {
   id: string;
@@ -22,7 +26,9 @@ interface BookDescriptionProps {
 }
 
 const BookDescription = ({ book }) => {
-  console.log("finallll", book.data.reviews);
+  const { user } = useAppSelector((state) => state.auth);
+  // console.log("finallll", user);
+  console.log("BOOKSD", book?.data.id);
 
   return (
     <div>
@@ -52,18 +58,22 @@ const BookDescription = ({ book }) => {
               {book?.data.publicationDate}
             </p>
             <div className="flex items-center space-x-6 justify-center ">
-              <Link
-                className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80 rounded-lg  "
-                to="/"
-              >
-                Edit Book
-              </Link>
-              <Link
-                className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80 rounded-lg  "
-                to="/"
-              >
-                Delete Book
-              </Link>
+              {user.userId != book?.data.id && (
+                <Link
+                  className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80 rounded-lg  "
+                  to={`/editBook/${book?.data.id}`}
+                >
+                  Edit Book
+                </Link>
+              )}
+              {user.userId != book?.data.id && (
+                <Link
+                  className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80 rounded-lg  "
+                  to={`/deleteBook/${book?.data.id}`}
+                >
+                  Delete Book
+                </Link>
+              )}
             </div>
           </div>
         </Link>
@@ -72,7 +82,7 @@ const BookDescription = ({ book }) => {
       <div className="py-11">
         <h2>User Reviews</h2>
         <div className="space-y-4 pt-8">
-          {book.data.reviews.map((review, index) => (
+          {book.data.reviews.map((review) => (
             <div
               key={book?.data.id}
               className="p-4 border rounded-lg shadow-md"

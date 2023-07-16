@@ -24,7 +24,7 @@ interface IProps {
 }
 
 const SingleCard = ({ book }: IProps) => {
-  console.log("BOOK IDDDDDDD", book.id);
+  // console.log("BOOK IDDDDDDD", book.id);
 
   return (
     <div className=" ">

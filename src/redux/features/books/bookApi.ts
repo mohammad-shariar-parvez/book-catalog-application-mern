@@ -12,31 +12,13 @@ export const bookApi = apiSlice.injectEndpoints({
       providesTags: ["Books"],
     }),
 
-    // getFilteredBooks: builder.query({
-    //   query: ({ search, genre, publicationDate }) => {
-    //     let queryUrl = "";
-    //     if (search) {
-    //       // console.log("SEARCH from Mmain", sort);
-    //       queryUrl += `searchTerm=${search}`;
-    //     }
-    //     if (genre) {
-    //       queryUrl += `&genre=${genre}`;
-    //     }
-    //     if (publicationDate) {
-    //       queryUrl += `&publicationDate=${publicationDate}`;
-    //     }
-    //     return `/jobs/?${encodeURI(queryUrl)}`;
-    //   },
-    //   invalidatesTags: ["Books"],
-    // }),
-
     getSingleBook: builder.query({
       query: (id) => `/books/${id}`,
       providesTags: (result, error, arg) => [{ type: "Book", id: arg }],
     }),
     addBook: builder.mutation({
       query: (data) => ({
-        url: "/add-book",
+        url: "/books/add-book",
         method: "POST",
         body: data,
       }),
