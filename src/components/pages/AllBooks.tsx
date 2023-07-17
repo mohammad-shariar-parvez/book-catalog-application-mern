@@ -28,6 +28,7 @@ const AllBooks = () => {
 
   return (
     <section className="wrapper  ">
+      <h1 className="text-center">All Books</h1>
       <div className="grid grid-cols-1  md:grid-cols-2 gap-4 pt-24 md:pt-6 ">
         {books.map((book: IBook) => (
           <SingleCard key={book.id} book={book} />

@@ -1,16 +1,24 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
+import { useState } from "react";
 const Searchbar = ({ value }: { value: boolean }) => {
   // console.log("value is", value);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  console.log(showDropdown);
+
+  const handleToggle = () => {
+    setShowDropdown((prevState) => !prevState);
+  };
 
   return (
     <div className="relative">
       <form
-        className={`md:static fixed top-16 left-0 right-0 p-2 bg-golden md:bg-inherit transition-opacity duration-200 ease-in-out md:opacity-100  ${
-          value ? "opacity-100" : "opacity-0 pointer-events-none"
+        className={`md:static fixed top-16 left-0 right-0 p-2 bg-golden md:bg-inherit transition-opacity duration-200 ease-in-out md:opacity-100 pointer  ${
+          value ? "opacity-100" : "opacity-0 "
         }`}
       >
-        <div className="flex  ">
+        <div className="flex relative  ">
           <label
             htmlFor="search-dropdown"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -22,8 +30,9 @@ const Searchbar = ({ value }: { value: boolean }) => {
             data-dropdown-toggle="dropdown"
             className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
             type="button"
+            onClick={handleToggle}
           >
-            All categories{" "}
+            Year
             <svg
               className="w-2.5 h-2.5 ml-2.5"
               aria-hidden="true"
@@ -40,32 +49,30 @@ const Searchbar = ({ value }: { value: boolean }) => {
               />
             </svg>
           </button>
+
           <div
             id="dropdown"
-            className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+            className={`z-10 ${
+              !showDropdown && "hidden"
+            }  absolute top-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-20`}
           >
             <ul
-              className="py-2 text-sm text-gray-700 dark:text-gray-200"
+              className="py-1 text-sm text-gray-700 dark:text-gray-200"
               aria-labelledby="dropdown-button"
             >
               <li>
                 <button
                   type="button"
-                  className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  className="inline-flex w-full px-2 py-1 hover:bg-gray-100 "
                 >
                   Mockups
                 </button>
               </li>
-              <li>
-                <button
-                  type="button"
-                  className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Templates
-                </button>
-              </li>
             </ul>
           </div>
+
+          {/* Search  */}
+
           <div className="relative w-full">
             <input
               type="search"
@@ -93,7 +100,6 @@ const Searchbar = ({ value }: { value: boolean }) => {
                   d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                 />
               </svg>
-              <span className="sr-only">Search</span>
             </button>
           </div>
         </div>
