@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Input from "../atoms/Input";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 interface FormValues {
   email: string;
   password: string;
@@ -18,7 +18,7 @@ const LoginForm: React.FC = () => {
   const [login, { data, error: responseError, isSuccess }] = useLoginMutation();
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
-  const prevLocation = useLocation();
+
   console.log("Previous locatyion");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

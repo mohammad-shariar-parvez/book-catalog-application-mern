@@ -8,18 +8,15 @@ import { useAppSelector } from "../../../redux/hook";
 
 export default function Navbar() {
   const { user } = useAppSelector((state) => state.auth);
+  const { total, books } = useAppSelector((state) => state.wishList);
   const [navbar, setNavbar] = useState(false);
+  console.log("BOOKS+++++ IS", books);
 
   const [isFixedVisible, setIsFixedVisible] = useState(false);
 
   const handleButtonClick = () => {
     setIsFixedVisible(!isFixedVisible);
   };
-  // console.log("USER IS-----", user);
-
-  // console.log("USER IS", user);
-  // useEffect(() => {
-  // }, [dispatch, user]);
 
   const changeBackground = () => {
     if (window.scrollY >= 80) {
@@ -76,8 +73,8 @@ export default function Navbar() {
                 type="button"
                 className="md:text-golden text-white font-bold  p-1 rounded shadow relative text-sm"
               >
-                <span className="absolute -top-2 left-6 bg-red-500 text-white rounded w-5 h-5 text-sm font-semibold rounded-full">
-                  45
+                <span className="absolute -top-2 left-6 bg-red-500 text-white  w-5 h-5 text-sm font-semibold rounded-full">
+                  {total}
                 </span>
 
                 <svg
