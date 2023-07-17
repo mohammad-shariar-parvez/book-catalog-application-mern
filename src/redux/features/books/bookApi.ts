@@ -30,7 +30,7 @@ export const bookApi = apiSlice.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: (_result, _error, arg) => [
+      invalidatesTags: (_result, _error, arg: { id: string }) => [
         "Books",
         { type: "Book", id: arg.id },
       ],

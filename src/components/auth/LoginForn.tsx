@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Input from "../atoms/Input";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 interface FormValues {
   email: string;
   password: string;
@@ -18,6 +18,8 @@ const LoginForm: React.FC = () => {
   const [login, { data, error: responseError, isSuccess }] = useLoginMutation();
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
+  const prevLocation = useLocation();
+  console.log("Previous locatyion");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -33,6 +35,7 @@ const LoginForm: React.FC = () => {
     //     setError(responseError.data);
     // }
     if (isSuccess && data?.data) {
+      // history.push(`/login?redirectTo=${prevLocation}`);
       navigate("/");
     }
   }, [data, responseError, navigate, isSuccess]);
@@ -95,7 +98,7 @@ const LoginForm: React.FC = () => {
           type="submit"
           className="text-white bg-golden hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  "
         >
-          Sign in
+          Login
         </button>
       </div>
     </form>

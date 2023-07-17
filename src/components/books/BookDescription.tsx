@@ -3,8 +3,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/hook";
+import { useDeleteBookMutation } from "../../redux/features/books/bookApi";
+import Toast from "../atoms/Toaster";
 
 interface IBook {
   id: string;
@@ -26,12 +29,34 @@ interface BookDescriptionProps {
 
 const BookDescription = ({ book }: BookDescriptionProps) => {
   const { user } = useAppSelector((state) => state.auth);
-  // console.log("finallll", user);
-  console.log("BOOKSD", book);
+  const [deleteBook, { data, isSuccess }] = useDeleteBookMutation();
+  const [showToast, setShowToast] = useState(false);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isSuccess) {
+      setShowToast(true);
+      const timer = setTimeout(() => {
+        navigate("/");
+      }, 500);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [navigate, isSuccess]);
+
+  const handleDelete = () => {
+    if (book.id) {
+      void deleteBook(book.id);
+    }
+  };
+  console.log("DAATAA", user);
+  // console.log("BOOKSD", book);
 
   return (
     <div>
       <div className=" ">
+        {showToast && <Toast message={"Book Deleted Successfully"} />}
         <Link
           to={`/${book?.id}`}
           className="flex  items-center bg-white border border-gray-200 rounded-lg shadow flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700  "
@@ -59,19 +84,20 @@ const BookDescription = ({ book }: BookDescriptionProps) => {
             <div className="flex items-center space-x-6 justify-center ">
               {user?.userId != book?.id && (
                 <Link
-                  className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80 rounded-lg  "
+                  className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80  "
                   to={`/editBook/${book?.id}`}
                 >
                   Edit Book
                 </Link>
               )}
               {user?.userId != book?.id && (
-                <Link
-                  className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80 rounded-lg  "
-                  to={`/deleteBook/${book?.id}`}
+                <button
+                  className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80  "
+                  // to={`/deleteBook/${book?.id}`}
+                  onClick={handleDelete}
                 >
                   Delete Book
-                </Link>
+                </button>
               )}
             </div>
           </div>
