@@ -8,9 +8,9 @@ import { useAppSelector } from "../../../redux/hook";
 
 export default function Navbar() {
   const { user } = useAppSelector((state) => state.auth);
-  const { total, books } = useAppSelector((state) => state.wishList);
+  const { total } = useAppSelector((state) => state.wishList);
+  const { total: futureTotal } = useAppSelector((state) => state.futureBooks);
   const [navbar, setNavbar] = useState(false);
-  console.log("BOOKS+++++ IS", books);
 
   const [isFixedVisible, setIsFixedVisible] = useState(false);
 
@@ -68,12 +68,12 @@ export default function Navbar() {
 
           {/* Part */}
           <div className="ml-auto flex gap-3 items-center">
-            <div className="">
+            <Link to="/wishList">
               <button
                 type="button"
-                className="md:text-golden text-white font-bold  p-1 rounded shadow relative text-sm"
+                className="md:text-golden text-white font-bold p-1 rounded shadow relative text-sm"
               >
-                <span className="absolute -top-2 left-6 bg-red-500 text-white  w-5 h-5 text-sm font-semibold rounded-full">
+                <span className="absolute -top-2 left-6 bg-red-500 text-white w-5 h-5 text-sm font-semibold rounded-full">
                   {total}
                 </span>
 
@@ -88,12 +88,39 @@ export default function Navbar() {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                    d="M12 21.5l-1.94-1.759C4.75 14.307 2 11.292 2 7.5 2 4.186 4.186 2 7.5 2c1.76 0 3.363.844 4.5 2.149C13.137 2.844 14.74 2 16.5 2 19.814 2 22 4.186 22 7.5c0 3.792-2.75 6.807-8.06 12.242L12 21.5z"
                   />
                 </svg>
               </button>
-            </div>
+            </Link>
 
+            {/* ICON FOR READ BOOOK */}
+
+            <Link to="/futureBooks">
+              <button
+                type="button"
+                className="md:text-golden text-white font-bold p-1 rounded shadow relative text-sm"
+              >
+                <span className="absolute -top-2 left-6 bg-red-500 text-white w-5 h-5 text-sm font-semibold rounded-full">
+                  {futureTotal}
+                </span>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 4.5A1.5 1.5 0 013.5 6v13.5c0 .828.672 1.5 1.5 1.5h13.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H5zm0 0c0-.414.336-.75.75-.75h12.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H5.75a.75.75 0 01-.75-.75V4.5zM9 2.25h6M12 2.25v4"
+                  />
+                </svg>
+              </button>
+            </Link>
             <div className=" text-white  py-2 text-lg flex items-center gap-2 justify-center">
               <button onClick={handleButtonClick}>
                 <i className="bx bx-search md:hidden"></i>
