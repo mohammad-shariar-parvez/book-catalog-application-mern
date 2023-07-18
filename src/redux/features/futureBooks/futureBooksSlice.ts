@@ -38,7 +38,7 @@ const futureBooksSlice = createSlice({
       const existing = state.books.find(
         (book) => book.id === action.payload.id,
       );
-      console.log("PAYLOAD ID ", action.payload.id, existing);
+      // console.log("PAYLOAD ID ", action.payload.id, existing);
 
       if (!existing) {
         state.books.push({ ...action.payload });

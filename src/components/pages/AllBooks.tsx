@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import { useGetBooksQuery } from "../../redux/features/books/bookApi";
+import { useGetBooksWithFilterQuery } from "../../redux/features/books/bookApi";
+import { useAppSelector } from "../../redux/hook";
 import SingleCard from "../books/SingleCard";
 
 interface IBook {
@@ -21,10 +23,16 @@ interface IBook {
 }
 
 const AllBooks = () => {
-  // const [queryUrl, setQueryUrl] = useState("");
-  const { data } = useGetBooksQuery(undefined);
-  const books: IBook[] = data ? data["data"] : [];
-  //   const { data } = data;
+  const { queryUrl } = useAppSelector((state) => state.filterCategory);
+  const { data: filteredBooks } = useGetBooksWithFilterQuery(
+    queryUrl.queryString,
+  );
+
+  const books: IBook[] = filteredBooks ? filteredBooks["data"] : [];
+
+  // console.log("Global book", filteredBooks);
+  // console.log("QUERY", queryString);
+  console.log("DROPDOWNS", queryUrl);
 
   return (
     <section className="wrapper  ">

@@ -3,7 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import SingleCard from "./SingleCard";
-import { useGetBooksQuery } from "../../redux/features/books/bookApi";
+import { useGetBooksWithFilterQuery } from "../../redux/features/books/bookApi";
+import { useAppSelector } from "../../redux/hook";
 
 interface IBook {
   id: string;
@@ -21,18 +22,18 @@ interface IBook {
 }
 
 const BookCard = () => {
-  const { data } = useGetBooksQuery(undefined);
-  const firstTenBooks: IBook[] = data ? data.data.slice(0, 10) : [];
-  console.log("BOOOKS", data);
+  const { queryString } = useAppSelector((state) => state.filterCategory);
+  const { data: filteredBooks } = useGetBooksWithFilterQuery(queryString);
+
+  const firstTenBooks: IBook[] = filteredBooks
+    ? filteredBooks.data.slice(0, 10)
+    : [];
   return (
     <section className="wrapper  ">
       <div className="grid grid-cols-1  md:grid-cols-2 gap-4 pt-24 md:pt-6 ">
         {firstTenBooks.map((book: IBook) => (
           <SingleCard key={book.id} book={book} />
         ))}
-        {/* {data.data ? data.data.slice(0, 10).map((book:IBook) => (
-          <SingleCard key={book.id } book={book} />
-        ))} */}
       </div>
     </section>
   );

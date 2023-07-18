@@ -29,7 +29,7 @@ interface BookDescriptionProps {
 
 const BookDescription = ({ book }: BookDescriptionProps) => {
   const { user } = useAppSelector((state) => state.auth);
-  const [deleteBook, { data, isSuccess }] = useDeleteBookMutation();
+  const [deleteBook, { isSuccess }] = useDeleteBookMutation();
   const [showToast, setShowToast] = useState(false);
 
   const navigate = useNavigate();

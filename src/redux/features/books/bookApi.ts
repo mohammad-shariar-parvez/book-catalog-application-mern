@@ -1,16 +1,50 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { apiSlice } from "../api/apiSlice";
+import { createDropDown } from "../filter/filterSlice";
 
 export const bookApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getBooks: builder.query({
+    getAllBooks: builder.query({
       query: () => "/books",
-      keepUnusedDataFor: 600,
+
+      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          // console.log("RESULT isss", result.data["data"]);
+          dispatch(createDropDown(result.data["data"]));
+        } catch (err) {
+          // console.log("EEEEOOORRR");
+          // do nothing
+        }
+      },
+      providesTags: ["AllBooks"],
+    }),
+
+    getBooksWithFilter: builder.query({
+      query: (queryString) => `/books/?${queryString}`,
       providesTags: ["Books"],
     }),
+
+    // getFilteredBooks: builder.mutation({
+    //   query: (data) => ({
+    //     url: `/books?param=${data}`,
+    //     method: "GET",
+    //   }),
+    //   async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
+    //     try {
+    //       const result = await queryFulfilled;
+    //       console.log("RESULT", result);
+
+    //       dispatch(addBooks(result.data));
+    //     } catch (err) {
+    //       // do nothing
+    //     }
+    //   },
+    // }),
 
     getSingleBook: builder.query({
       query: (id) => `/books/${id}`,
@@ -22,7 +56,7 @@ export const bookApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Books"],
+      invalidatesTags: ["Books", "AllBooks"],
     }),
     editBook: builder.mutation({
       query: ({ id, data }) => ({
@@ -31,6 +65,7 @@ export const bookApi = apiSlice.injectEndpoints({
         body: data,
       }),
       invalidatesTags: (_result, _error, arg: { id: string }) => [
+        "AllBooks",
         "Books",
         { type: "Book", id: arg.id },
       ],
@@ -40,13 +75,14 @@ export const bookApi = apiSlice.injectEndpoints({
         url: `/books/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Books"],
+      invalidatesTags: ["Books", "AllBooks"],
     }),
   }),
 });
 
 export const {
-  useGetBooksQuery,
+  useGetBooksWithFilterQuery,
+  useGetAllBooksQuery,
   useGetSingleBookQuery,
   useAddBookMutation,
   useEditBookMutation,

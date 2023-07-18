@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppSelector } from "../../redux/hook";
 import SingleCard from "../books/SingleCard";
 
@@ -17,7 +16,7 @@ interface IBook {
 }
 
 const WishList = () => {
-  const { total, books } = useAppSelector((state) => state.wishList);
+  const { books } = useAppSelector((state) => state.wishList);
   console.log("YA", books);
 
   return (

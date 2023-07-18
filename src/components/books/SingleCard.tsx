@@ -55,7 +55,7 @@ const SingleCard = ({ book, wishList, futureBooks }: IProps) => {
     setFinish(true);
   };
 
-  console.log("WIISDH ", wishList);
+  // console.log("WIISDH ", wishList);
 
   return (
     <div className=" ">
