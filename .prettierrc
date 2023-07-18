@@ -3,7 +3,7 @@
     {
       "files": "*.css",
       "options": {
-        "singleQuote": false,
+        "singleQuote": true,
         "trailingComma": "none"
       }
     }

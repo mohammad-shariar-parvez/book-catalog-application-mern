@@ -47,6 +47,17 @@ const Searchbar = ({ value }: { value: boolean }) => {
     setShowDropdownYear((prevState) => !prevState);
   };
 
+  // const handleGenre = (name: string) => {
+  //   dispatch(
+  //     createQueryString({
+  //       queryUrl: {
+  //         queryString: name,
+  //         queryCategory: "&genre",
+  //         queryRemove: false,
+  //       },
+  //     }),
+  //   );
+  // };
   const handleGenre = (name: string) => {
     dispatch(
       createQueryString({
