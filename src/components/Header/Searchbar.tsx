@@ -8,7 +8,10 @@
 import { useState, useEffect } from "react";
 import { useGetAllBooksQuery } from "../../redux/features/books/bookApi";
 import { useAppDispatch } from "../../redux/hook";
-import { createQueryString } from "../../redux/features/filter/filterSlice";
+import {
+  createGenre,
+  createYear,
+} from "../../redux/features/filter/filterSlice";
 
 const Searchbar = ({ value }: { value: boolean }) => {
   // const [queryUrl, setQueryUrl] = useState("?");
@@ -59,27 +62,11 @@ const Searchbar = ({ value }: { value: boolean }) => {
   //   );
   // };
   const handleGenre = (name: string) => {
-    dispatch(
-      createQueryString({
-        queryUrl: {
-          queryString: name,
-          queryCategory: "&genre",
-          queryRemove: false,
-        },
-      }),
-    );
+    dispatch(createGenre(name));
   };
 
   const handlePublicationYear = (name: string) => {
-    dispatch(
-      createQueryString({
-        queryUrl: {
-          queryString: name,
-          queryCategory: "&publicationDate",
-          queryRemove: false,
-        },
-      }),
-    );
+    dispatch(createYear(name));
   };
   //   let queryUrl = "";
   //   if (search) {

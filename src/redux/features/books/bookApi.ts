@@ -4,23 +4,22 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { apiSlice } from "../api/apiSlice";
-import { createDropDown } from "../filter/filterSlice";
 
 export const bookApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllBooks: builder.query({
       query: () => "/books",
 
-      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
-        try {
-          const result = await queryFulfilled;
-          // console.log("RESULT isss", result.data["data"]);
-          dispatch(createDropDown(result.data["data"]));
-        } catch (err) {
-          // console.log("EEEEOOORRR");
-          // do nothing
-        }
-      },
+      // async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
+      //   try {
+      //     const result = await queryFulfilled;
+      //     // console.log("RESULT isss", result.data["data"]);
+      //     dispatch(createDropDown(result.data["data"]));
+      //   } catch (err) {
+      //     // console.log("EEEEOOORRR");
+      //     // do nothing
+      //   }
+      // },
       providesTags: ["AllBooks"],
     }),
 

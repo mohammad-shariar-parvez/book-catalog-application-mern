@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -23,16 +25,16 @@ interface IBook {
 }
 
 const AllBooks = () => {
-  const { queryUrl } = useAppSelector((state) => state.filterCategory);
-  const { data: filteredBooks } = useGetBooksWithFilterQuery(
-    queryUrl.queryString,
-  );
+  const { queryString } = useAppSelector((state) => state.filterCategory);
+  const { data: filteredBooks } = useGetBooksWithFilterQuery(queryString);
 
   const books: IBook[] = filteredBooks ? filteredBooks["data"] : [];
 
   // console.log("Global book", filteredBooks);
   // console.log("QUERY", queryString);
-  console.log("DROPDOWNS", queryUrl);
+  // console.log("DROPDOWNS", `${genre}${publicationYear}`);
+  console.log("DROPDOWNS", queryString);
+  console.log("BOOOOKKSS", books);
 
   return (
     <section className="wrapper  ">
