@@ -34,14 +34,12 @@ const LoginForm: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isSuccess && data?.data) {
-      console.log("LOOOOCATION IS", location);
-
-      if (location) {
-        navigate(location.state.from);
-      } else {
-        navigate("/");
-      }
+    console.log("LOOOOCATION IS", isSuccess);
+    if (isSuccess && data?.data && location.state?.from) {
+      navigate(location.state.from);
+    }
+    if (isSuccess && data?.data && !location.state?.from) {
+      navigate("/");
     }
   }, [data, responseError, navigate, isSuccess, location]);
 

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavLinks from "../Navlink";
 import { Link } from "react-router-dom";
 import Searchbar from "../Searchbar";
@@ -15,20 +14,40 @@ export default function Navbar() {
   const [isFixedVisible, setIsFixedVisible] = useState(false);
 
   const handleButtonClick = () => {
+    console.log("is fixed visible", isFixedVisible);
+
     setIsFixedVisible(!isFixedVisible);
   };
 
-  const changeBackground = () => {
-    if (window.scrollY >= 80) {
-      setNavbar(true);
-    } else {
-      setNavbar(false);
-    }
-  };
+  // const changeBackground = () => {
+  //   if (window.scrollY >= 5) {
+  //     setNavbar(true);
+  //   } else {
+  //     console.log("SCROLLL-----", window.scrollY);
+  //     setNavbar(false);
+  //   }
+  // };
 
-  if (typeof window != "undefined") {
+  // if (typeof window != "undefined") {
+  //   window.addEventListener("scroll", changeBackground);
+  // }
+
+  useEffect(() => {
+    // Event listener for 'scroll' event
+    const changeBackground = () => {
+      if (window.scrollY >= 5) {
+        setNavbar(true);
+      } else {
+        setNavbar(false);
+      }
+    };
     window.addEventListener("scroll", changeBackground);
-  }
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("scroll", changeBackground);
+    };
+  }, [navbar]);
 
   return (
     <>
@@ -47,7 +66,7 @@ export default function Navbar() {
           <div className="shrink-0">
             <Link
               className={`${
-                navbar ? "  md:text-black " : "md:text-white"
+                navbar ? "  md:text-golden " : "md:text-white"
               } font-semibold text-2xl text-white`}
               to="/"
             >
@@ -129,10 +148,6 @@ export default function Navbar() {
               </button>
             </Link>
             <div className=" text-white  py-2 text-lg flex items-center gap-2 justify-center">
-              {/* <button type="button" className="">
-                <i className="bx bxs-user-circle"></i>
-              </button> */}
-
               <small
                 className={`${navbar ? "  md:text-black " : "md:text-white"}`}
               >
@@ -140,7 +155,7 @@ export default function Navbar() {
               </small>
               <button
                 className={` ${
-                  navbar ? "  md:text-black " : "md:text-white"
+                  navbar ? "  md:text-golden " : ""
                 }hover:text-white border border-golden hover:bg-golden focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-1.5 py-1.5 text-center   shadow  `}
               >
                 <Link to="/login">{user?.email ? "Logout" : "Login"}</Link>

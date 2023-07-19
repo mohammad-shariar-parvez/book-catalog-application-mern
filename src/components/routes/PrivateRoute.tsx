@@ -12,12 +12,6 @@ export default function PrivateRoute({ children }: IProps) {
   const { user, accessToken } = useAppSelector((state) => state.auth);
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    if (!user?.email && !accessToken) {
-      localStorage.setItem("redirectPath", pathname);
-    }
-  }, [user, accessToken, pathname]);
-
   if (!user?.email && !accessToken) {
     return <Navigate to="/login" replace state={{ from: pathname }} />;
   }

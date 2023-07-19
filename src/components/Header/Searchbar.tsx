@@ -19,12 +19,14 @@ const Searchbar = ({ value }: { value: boolean }) => {
   const { data: allBooks } = useGetAllBooksQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
-
+  const [realValue, setRealValue] = useState(value);
   const [showDropdownGenre, setShowDropdownGenre] = useState(false);
   const [showDropdownYear, setShowDropdownYear] = useState(false);
   const [searchItem, setSearchItem] = useState("");
-  const [showDropdown, setShowDropdown] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
+  console.log("VAAALUEE", value);
+  console.log("SSHOOW DROPDOWN", showDropdown);
 
   const dispatch = useAppDispatch();
 
@@ -70,43 +72,46 @@ const Searchbar = ({ value }: { value: boolean }) => {
     setSearchItem("");
   };
   //Scroll event
-  console.log("showDropdownGenre", showDropdownGenre);
+
   useEffect(() => {
     // Event listener for 'scroll' event
-    const handleScroll = () => {
-      const currentScrollPos = window.scrollY;
-      const scrollUp = currentScrollPos < prevScrollPos;
+    if (value) {
+      const handleScroll = () => {
+        const currentScrollPos = window.scrollY;
+        const scrollUp = currentScrollPos > prevScrollPos;
 
-      setShowDropdown(scrollUp);
+        setShowDropdown(scrollUp);
+        setPrevScrollPos(currentScrollPos);
+      };
 
-      setPrevScrollPos(currentScrollPos);
-    };
+      window.addEventListener("scroll", handleScroll);
 
-    window.addEventListener("scroll", handleScroll);
+      // if (showDropdown) {
+      //   if (value) {
+      //     setShowDropdown(false);
+      //   }
+      // }
 
-    // Cleanup function to remove the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [prevScrollPos]);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [prevScrollPos, value]);
 
-  console.log("SCROLLL ", window.scrollY);
+  const checkBar = () => {
+    setShowDropdown(!showDropdown);
+  };
 
   return (
     <div className="relative">
+      <button onClick={checkBar}>HEllo</button>
       <form
-        className={`md:static fixed top-16 left-0 right-0 p-2 bg-golden md:bg-inherit transition-opacity duration-200 ease-in-out md:opacity-100 pointer  ${
-          value ? "opacity-100" : "opacity-0 "
-        }`}
+        className={`md:static fixed top-16 left-0 right-0 p-2 bg-golden md:bg-inherit transition-opacity duration-200 ease-in-out md:opacity-100 pointer ${
+          !showDropdown ? "static" : "hidden"
+        }  ${value ? "static" : "hidden "}`}
         onSubmit={submitSearch}
       >
-        <div
-          className={`flex relative ${
-            showDropdownGenre && showDropdownGenre && !showDropdown
-              ? "hidden"
-              : ""
-          }`}
-        >
+        <div className={`flex relative ${value ? "static" : "hidden "} `}>
           <label
             htmlFor="search-dropdown"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"

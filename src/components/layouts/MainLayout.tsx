@@ -4,7 +4,7 @@ import Footer from "../footer/Footer";
 
 export default function MainLayout() {
   return (
-    <div>
+    <div className="scroll-smooth font-poppins">
       <Outlet />
       <Footer />
     </div>

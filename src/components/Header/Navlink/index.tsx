@@ -1,11 +1,22 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { Link } from "react-router-dom";
 
 const NavLinks = ({ value }: { value: boolean }) => {
   const Links = [
     {
+      name: "Home",
+      link: "/",
+      icon: "bx bx-info-circle",
+    },
+    {
       name: "All Books",
       link: "/allbooks",
-      icon: "bx bx-info-circle",
+      icon: "bx bx-home-alt",
+    },
+    {
+      name: "Add Book",
+      link: "/addBook",
+      icon: "bx bx-book-add",
     },
   ];
 
@@ -16,7 +27,7 @@ const NavLinks = ({ value }: { value: boolean }) => {
           <Link
             className={` ${
               value
-                ? " md:text-black  nav-button  "
+                ? " md:text-white  nav-button  "
                 : " md:text-white  nav-button     "
             }hover:text-yellow-500  flex flex-col items-center `}
             to={link.link}
@@ -31,10 +42,10 @@ const NavLinks = ({ value }: { value: boolean }) => {
           </Link>
         </li>
       ))}
-      <li className="hover:text-yellow-600 shrink-0 ">
+      <li className="hover:text-yellow-600 shrink-0 hidden md:static">
         <Link
           className={`${
-            value ? "  md:rounded-none  " : "   rounded-lg  "
+            value && "rounded-lg  "
           } ' text-white  bg-golden p-2  hover:opacity-80 rounded-lg  `}
           to="/addBook"
         >

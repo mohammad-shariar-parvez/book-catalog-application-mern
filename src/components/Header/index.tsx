@@ -3,7 +3,7 @@ import Topbar from "./Topbar";
 
 function Header() {
   return (
-    <div className="md:pb-40">
+    <div className="md:pb-40 scroll-smooth ">
       <Topbar />
       <Navbar />
       {/* <section className='relative bg-gradient-to-br w-full h-screen from-gray-800 to-gray-600  '>
