@@ -35,23 +35,25 @@ export default function Navbar() {
       <nav
         className={`${
           navbar
-            ? "md:bg-gray-200 md:fixed md:transition md:duration-300  top-0 left-0 right-0 md:ease-out md:shadow-lg "
+            ? "md:bg-gradient-to-br from-purple-600 to-blue-500 md:fixed md:transition md:duration-300  top-0 left-0 right-0 md:ease-out md:shadow-lg "
             : "md:bg-gray-600 md:absolute md:top-[40px] border-gray-700 "
         } fixed top-0  md:border-b-[1px] bg-golden md:bg-none z-30 w-full `}
       >
         <div
           className={`${
             navbar ? " md:my-0" : "md:my-4  "
-          } flex items-center md:max-w-6xl mx-auto  p-4  pb-4 md:py-0  `}
+          } flex items-center md:max-w-6xl mx-auto  p-4 py-2  md:py-0   `}
         >
-          <Link
-            className={`${
-              navbar ? "md:text-black " : "md:text-white"
-            } font-semibold text-2xl text-white`}
-            to="/"
-          >
-            MSP Books
-          </Link>
+          <div className="shrink-0">
+            <Link
+              className={`${
+                navbar ? "  md:text-black " : "md:text-white"
+              } font-semibold text-2xl text-white`}
+              to="/"
+            >
+              MSP Books
+            </Link>
+          </div>
           {/* Part-1 */}
           <div
             className={
@@ -63,11 +65,16 @@ export default function Navbar() {
             </ul>
           </div>
 
-          {/*  */}
           <Searchbar value={isFixedVisible} />
 
           {/* Part */}
-          <div className="ml-auto flex gap-3 items-center">
+          <div className="ml-auto flex gap-3 items-center space-x-1 ">
+            <button
+              className="text-white       rounded-lg text-lg     "
+              onClick={handleButtonClick}
+            >
+              <i className="bx bx-search md:hidden"></i>
+            </button>
             <Link to="/wishList">
               <button
                 type="button"
@@ -99,9 +106,9 @@ export default function Navbar() {
             <Link to="/futureBooks">
               <button
                 type="button"
-                className="md:text-golden text-white font-bold p-1 rounded shadow relative text-sm"
+                className="md:text-golden text-white font-bold p-1 rounded shadow relative text-sm "
               >
-                <span className="absolute -top-2 left-6 bg-red-500 text-white w-5 h-5 text-sm font-semibold rounded-full">
+                <span className="absolute -top-2 left-6 bg-red-500 text-white w-5 h-5 text-sm font-semibold rounded-full ">
                   {futureTotal}
                 </span>
 
@@ -122,46 +129,27 @@ export default function Navbar() {
               </button>
             </Link>
             <div className=" text-white  py-2 text-lg flex items-center gap-2 justify-center">
-              <button onClick={handleButtonClick}>
-                <i className="bx bx-search md:hidden"></i>
-              </button>
-              <button type="button" className="">
+              {/* <button type="button" className="">
                 <i className="bx bxs-user-circle"></i>
+              </button> */}
+
+              <small
+                className={`${navbar ? "  md:text-black " : "md:text-white"}`}
+              >
+                {user?.name.lastName}
+              </small>
+              <button
+                className={` ${
+                  navbar ? "  md:text-black " : "md:text-white"
+                }hover:text-white border border-golden hover:bg-golden focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-1.5 py-1.5 text-center   shadow  `}
+              >
+                <Link to="/login">{user?.email ? "Logout" : "Login"}</Link>
+
+                {/* <i class="bx bxs-log-in-circle"></i> */}
               </button>
 
-              {user?.email ? (
-                <button className=" hover:text-yellow-600  ">
-                  <Link
-                    className={` ${
-                      navbar
-                        ? " md:text-black  nav-button  "
-                        : " md:text-white  nav-button     "
-                    }hover:text-yellow-500  flex flex-col items-center `}
-                    to="/login"
-                  >
-                    Logout
-                  </Link>
-                  {/* <i class="bx bxs-log-in-circle"></i> */}
-                </button>
-              ) : (
-                <button className=" hover:text-yellow-600  ">
-                  <Link
-                    className={` ${
-                      navbar
-                        ? " md:text-black  nav-button  "
-                        : " md:text-white  nav-button     "
-                    }hover:text-yellow-500  flex flex-col items-center `}
-                    to="/login"
-                  >
-                    Login
-                  </Link>
-                  {/* <i class="bx bxs-log-in-circle"></i> */}
-                </button>
-              )}
-
-              <small>{user?.name.lastName}</small>
               {/* dropdown menus */}
-              <div className="hidden group-hover:block absolute w-full transition">
+              {/* <div className="hidden group-hover:block absolute w-full transition">
                 <ul className="bg-white shadow-lg w-full p-2 flex flex-col gap-1">
                   <li className="text-gray-700 font-semibold hover:text-golden transition">
                     <Link className="block" to={"/profile"}>
@@ -174,7 +162,7 @@ export default function Navbar() {
                     </button>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
 
             {/* <button

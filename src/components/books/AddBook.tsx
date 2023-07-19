@@ -36,10 +36,6 @@ const AddBook = () => {
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
 
-  //   console.log("finallll", user?.id);
-  //   console.log("BOOKSD", user?.id);
-  //   console.log("isSuccess", isSuccess);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormValues((prevFormValues) => ({
@@ -76,8 +72,6 @@ const AddBook = () => {
     if (formValues.image.trim() === "") {
       validationErrors.image = "image is required";
     }
-
-    // console.log("ussse state", formValues);
 
     void addBook({
       title: formValues.title,

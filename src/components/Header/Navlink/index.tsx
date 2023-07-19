@@ -12,7 +12,7 @@ const NavLinks = ({ value }: { value: boolean }) => {
   return (
     <>
       {Links.map((link, i) => (
-        <li key={i} className=" hover:text-yellow-600 ">
+        <li key={i} className=" hover:text-yellow-600 shrink-0 ">
           <Link
             className={` ${
               value
@@ -31,7 +31,7 @@ const NavLinks = ({ value }: { value: boolean }) => {
           </Link>
         </li>
       ))}
-      <li className="hover:text-yellow-600 ">
+      <li className="hover:text-yellow-600 shrink-0 ">
         <Link
           className={`${
             value ? "  md:rounded-none  " : "   rounded-lg  "

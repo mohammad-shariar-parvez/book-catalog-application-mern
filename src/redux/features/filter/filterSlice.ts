@@ -51,7 +51,6 @@ const filterSlice = createSlice({
     },
     resetQuery: (state) => {
       // console.log("STETE", state);
-
       state.queryString = "";
     },
   },

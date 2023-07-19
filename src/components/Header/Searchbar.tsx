@@ -16,16 +16,22 @@ import {
 } from "../../redux/features/filter/filterSlice";
 
 const Searchbar = ({ value }: { value: boolean }) => {
-  // const [queryUrl, setQueryUrl] = useState("?");
-
   const { data: allBooks } = useGetAllBooksQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
+
+  const [showDropdownGenre, setShowDropdownGenre] = useState(false);
+  const [showDropdownYear, setShowDropdownYear] = useState(false);
+  const [searchItem, setSearchItem] = useState("");
+  const [showDropdown, setShowDropdown] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
+
   const dispatch = useAppDispatch();
 
   const uniqueGenres = [
     ...new Set(allBooks?.data.map((item: { genre: string }) => item.genre)),
   ];
+
   const uniquePublicationYear = [
     ...new Set(
       allBooks?.data.map((item: { publicationDate: string }) =>
@@ -33,18 +39,6 @@ const Searchbar = ({ value }: { value: boolean }) => {
       ),
     ),
   ];
-
-  // console.log("----------", uniquePublicationYear);
-
-  const [showDropdownGenre, setShowDropdownGenre] = useState(false);
-  const [showDropdownYear, setShowDropdownYear] = useState(false);
-  const [searchItem, setSearchItem] = useState("");
-
-  // useEffect(() => {
-  //   // dispatch(setStatus("?"));
-  //   // console.log("HANDLE DROP DOWN", showDropdown);
-  //   // dispatch(setStatus(showDropdown));
-  // }, [showDropdown]);
 
   const handleToggleGenre = () => {
     setShowDropdownGenre((prevState) => !prevState);
@@ -58,28 +52,45 @@ const Searchbar = ({ value }: { value: boolean }) => {
       dispatch(createYear(""));
     }
   };
-
   const handleGenre = (name: string) => {
     dispatch(createGenre(`&genre=${name}`));
   };
-
   const handlePublicationYear = (name: string) => {
     dispatch(createYear(`&publicationDate=${name}`));
   };
-
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchItem(e.target.value);
   };
-  const handleOnBlour = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnBlour = () => {
     dispatch(createSearch(""));
-    // setSearchItem("");
-    console.log("EEE", e);
   };
   const submitSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(createSearch(`&searchTerm=${searchItem}`));
     setSearchItem("");
   };
+  //Scroll event
+  console.log("showDropdownGenre", showDropdownGenre);
+  useEffect(() => {
+    // Event listener for 'scroll' event
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      const scrollUp = currentScrollPos < prevScrollPos;
+
+      setShowDropdown(scrollUp);
+
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [prevScrollPos]);
+
+  console.log("SCROLLL ", window.scrollY);
 
   return (
     <div className="relative">
@@ -89,12 +100,18 @@ const Searchbar = ({ value }: { value: boolean }) => {
         }`}
         onSubmit={submitSearch}
       >
-        <div className="flex relative  ">
+        <div
+          className={`flex relative ${
+            showDropdownGenre && showDropdownGenre && !showDropdown
+              ? "hidden"
+              : ""
+          }`}
+        >
           <label
             htmlFor="search-dropdown"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
           >
-            Your Email
+            Genre
           </label>
           <button
             id="dropdown-button"
@@ -125,7 +142,7 @@ const Searchbar = ({ value }: { value: boolean }) => {
             id="dropdown"
             className={`z-10  ${
               !showDropdownGenre && "hidden "
-            } absolute top-10 bg-white divide-y divide-gray-100 rounded-lg max-h-14 shadow overflow-y-auto scroll-smooth no-scrollbar `}
+            } left- absolute top-11 bg-white divide-y divide-gray-100 rounded-lg max-h-14 shadow overflow-y-auto scroll-smooth no-scrollbar `}
           >
             <ul>
               {uniqueGenres.map(
@@ -135,7 +152,7 @@ const Searchbar = ({ value }: { value: boolean }) => {
                   <li>
                     <button
                       type="button"
-                      className="inline-flex w-full hover:bg-gray-100"
+                      className="inline-flex w-full hover:bg-gray-100 text-left text-sm"
                       onClick={() => handleGenre(name as string)}
                     >
                       {name as string}
@@ -151,7 +168,7 @@ const Searchbar = ({ value }: { value: boolean }) => {
           <button
             id="dropdown-button"
             data-dropdown-toggle="dropdown"
-            className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+            className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300  hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100  "
             type="button"
             onClick={handleToggleYear}
           >
@@ -184,7 +201,7 @@ const Searchbar = ({ value }: { value: boolean }) => {
                 <li>
                   <button
                     type="button"
-                    className="inline-flex w-full px-2  hover:bg-gray-100 text-center"
+                    className="inline-flex w-full px-2  hover:bg-gray-100 text-left text-sm"
                     onClick={() => handlePublicationYear(name as string)}
                   >
                     {name as string}

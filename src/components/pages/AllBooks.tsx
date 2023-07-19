@@ -7,9 +7,10 @@
 
 import { useEffect } from "react";
 import { useGetBooksWithFilterQuery } from "../../redux/features/books/bookApi";
-import { useAppSelector } from "../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import SingleCard from "../books/SingleCard";
 import { resetQuery } from "../../redux/features/filter/filterSlice";
+import Header from "../Header";
 
 interface IBook {
   id: string;
@@ -29,32 +30,40 @@ interface IBook {
 const AllBooks = () => {
   const { queryString } = useAppSelector((state) => state.filterCategory);
   const { data: filteredBooks } = useGetBooksWithFilterQuery(queryString);
-
+  const dispatch = useAppDispatch();
   const books: IBook[] = filteredBooks ? filteredBooks["data"] : [];
 
   // console.log("Global book", filteredBooks);
   // console.log("QUERY", queryString);
   // console.log("DROPDOWNS", `${genre}${publicationYear}`);
-  console.log("DROPDOWNS", queryString);
-  console.log("BOOOOKKSS", books);
-  // useEffect(() => {
-  //   return () => {
-  //     resetQuery();
-  //   };
-  // }, []);
+  // console.log("DROPDOWNS", queryString);
+  useEffect(() => {
+    return () => {
+      console.log("USEE EFFECT WORKS");
+
+      dispatch(resetQuery());
+    };
+  }, [dispatch]);
 
   return (
-    <section className="wrapper  ">
+    <>
+      <Header />
       <h1 className="text-center">All Books</h1>
-      <div className="grid grid-cols-1  md:grid-cols-2 gap-4 pt-24 md:pt-6 ">
-        {books.map((book: IBook) => (
-          <SingleCard key={book.id} book={book} />
-        ))}
-        {/* {data.data ? data.data.slice(0, 10).map((book:IBook) => (
-		  <SingleCard key={book.id } book={book} />
-		))} */}
-      </div>
-    </section>
+      <section className="wrapper   ">
+        {books.length == 0 && (
+          <div className="text-center">
+            <h3>No Books Found</h3>
+          </div>
+        )}
+        <div>
+          <div className="grid grid-cols-1  md:grid-cols-2 gap-4 pt-24 md:pt-6 ">
+            {books.map((book: IBook) => (
+              <SingleCard key={book.id} book={book} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 
