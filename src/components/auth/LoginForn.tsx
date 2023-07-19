@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useState, useEffect } from "react";
 import Input from "../atoms/Input";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
 interface FormValues {
   email: string;
   password: string;
@@ -19,7 +22,8 @@ const LoginForm: React.FC = () => {
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
 
-  console.log("Previous locatyion");
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,18 +33,17 @@ const LoginForm: React.FC = () => {
     }));
   };
 
-  const navigate = useNavigate();
   useEffect(() => {
-    // if (responseError?.data) {
-    //     setError(responseError.data);
-    // }
     if (isSuccess && data?.data) {
-      // history.push(`/login?redirectTo=${prevLocation}`);
-      navigate("/");
-    }
-  }, [data, responseError, navigate, isSuccess]);
+      console.log("LOOOOCATION IS", location);
 
-  // console.log("LOGIN DAAATA", data);
+      if (location) {
+        navigate(location.state.from);
+      } else {
+        navigate("/");
+      }
+    }
+  }, [data, responseError, navigate, isSuccess, location]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

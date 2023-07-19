@@ -19,13 +19,7 @@ export default function PrivateRoute({ children }: IProps) {
   }, [user, accessToken, pathname]);
 
   if (!user?.email && !accessToken) {
-    return <Navigate to="/login" state={{ path: pathname }} />;
-  }
-
-  const redirectPath = localStorage.getItem("redirectPath");
-  if (redirectPath) {
-    localStorage.removeItem("redirectPath");
-    return <Navigate to={redirectPath} replace />;
+    return <Navigate to="/login" replace state={{ from: pathname }} />;
   }
 
   return children;
