@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -10,6 +11,7 @@ import { useGetAllBooksQuery } from "../../redux/features/books/bookApi";
 import { useAppDispatch } from "../../redux/hook";
 import {
   createGenre,
+  createSearch,
   createYear,
 } from "../../redux/features/filter/filterSlice";
 
@@ -36,6 +38,7 @@ const Searchbar = ({ value }: { value: boolean }) => {
 
   const [showDropdownGenre, setShowDropdownGenre] = useState(false);
   const [showDropdownYear, setShowDropdownYear] = useState(false);
+  const [searchItem, setSearchItem] = useState("");
 
   // useEffect(() => {
   //   // dispatch(setStatus("?"));
@@ -45,40 +48,38 @@ const Searchbar = ({ value }: { value: boolean }) => {
 
   const handleToggleGenre = () => {
     setShowDropdownGenre((prevState) => !prevState);
+    if (showDropdownGenre) {
+      dispatch(createGenre(""));
+    }
   };
   const handleToggleYear = () => {
     setShowDropdownYear((prevState) => !prevState);
+    if (showDropdownGenre) {
+      dispatch(createYear(""));
+    }
   };
 
-  // const handleGenre = (name: string) => {
-  //   dispatch(
-  //     createQueryString({
-  //       queryUrl: {
-  //         queryString: name,
-  //         queryCategory: "&genre",
-  //         queryRemove: false,
-  //       },
-  //     }),
-  //   );
-  // };
   const handleGenre = (name: string) => {
-    dispatch(createGenre(name));
+    dispatch(createGenre(`&genre=${name}`));
   };
 
   const handlePublicationYear = (name: string) => {
-    dispatch(createYear(name));
+    dispatch(createYear(`&publicationDate=${name}`));
   };
-  //   let queryUrl = "";
-  //   if (search) {
-  //     // console.log("SEARCH from Mmain", sort);
-  //     queryUrl += `searchTerm=${search}`;
-  //   }
-  //   if (genre) {
-  //     queryUrl += `&genre=${genre}`;
-  //   }
-  //   if (publicationDate) {
-  //     queryUrl += `&publicationDate=${publicationDate}`;
-  //   }
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchItem(e.target.value);
+  };
+  const handleOnBlour = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(createSearch(""));
+    // setSearchItem("");
+    console.log("EEE", e);
+  };
+  const submitSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(createSearch(`&searchTerm=${searchItem}`));
+    setSearchItem("");
+  };
 
   return (
     <div className="relative">
@@ -86,6 +87,7 @@ const Searchbar = ({ value }: { value: boolean }) => {
         className={`md:static fixed top-16 left-0 right-0 p-2 bg-golden md:bg-inherit transition-opacity duration-200 ease-in-out md:opacity-100 pointer  ${
           value ? "opacity-100" : "opacity-0 "
         }`}
+        onSubmit={submitSearch}
       >
         <div className="flex relative  ">
           <label
@@ -121,22 +123,27 @@ const Searchbar = ({ value }: { value: boolean }) => {
 
           <div
             id="dropdown"
-            className={`z-10 ${
-              !showDropdownGenre && "hidden"
-            }  absolute top-10   bg-white  divide-y divide-gray-100 rounded-lg shadow `}
+            className={`z-10  ${
+              !showDropdownGenre && "hidden "
+            } absolute top-10 bg-white divide-y divide-gray-100 rounded-lg max-h-14 shadow overflow-y-auto scroll-smooth no-scrollbar `}
           >
             <ul>
-              {uniqueGenres.map((name) => (
-                <li>
-                  <button
-                    type="button"
-                    className="inline-flex w-full px-2 py-1 hover:bg-gray-100"
-                    onClick={() => handleGenre(name as string)}
-                  >
-                    {name as string}
-                  </button>
-                </li>
-              ))}
+              {uniqueGenres.map(
+                (
+                  name, // Limit the list to only 3 items using slice()
+                ) => (
+                  <li>
+                    <button
+                      type="button"
+                      className="inline-flex w-full hover:bg-gray-100"
+                      onClick={() => handleGenre(name as string)}
+                    >
+                      {name as string}
+                    </button>
+                    <hr />
+                  </li>
+                ),
+              )}
             </ul>
           </div>
 
@@ -170,18 +177,19 @@ const Searchbar = ({ value }: { value: boolean }) => {
             id="dropdown"
             className={`z-10 ${
               !showDropdownYear && "hidden"
-            }  absolute top-10 bg-white divide-y divide-gray-100 rounded-lg shadow text-center mx-auto  left-24 `}
+            }  absolute top-10 bg-white divide-y divide-gray-100 rounded-lg max-h-14 shadow overflow-y-auto scroll-smooth no-scrollba left-28  `}
           >
             <ul>
               {uniquePublicationYear.map((name) => (
                 <li>
                   <button
                     type="button"
-                    className="inline-flex w-full px-2 py-1 hover:bg-gray-100 text-center"
+                    className="inline-flex w-full px-2  hover:bg-gray-100 text-center"
                     onClick={() => handlePublicationYear(name as string)}
                   >
                     {name as string}
                   </button>
+                  <hr />
                 </li>
               ))}
             </ul>
@@ -194,12 +202,16 @@ const Searchbar = ({ value }: { value: boolean }) => {
               type="search"
               id="search-dropdown"
               className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-              placeholder="Search Mockups, Logos, Design Templates..."
+              placeholder="Search "
               required
+              name="search"
+              value={searchItem}
+              onChange={handleSearch}
+              onBlur={handleOnBlour}
             />
             <button
               type="submit"
-              className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-golden rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-golden rounded-r-lg border border-blue-700 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-300 "
             >
               <svg
                 className="w-4 h-4"

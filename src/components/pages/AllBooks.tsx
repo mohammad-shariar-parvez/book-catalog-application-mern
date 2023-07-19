@@ -5,9 +5,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
+import { useEffect } from "react";
 import { useGetBooksWithFilterQuery } from "../../redux/features/books/bookApi";
 import { useAppSelector } from "../../redux/hook";
 import SingleCard from "../books/SingleCard";
+import { resetQuery } from "../../redux/features/filter/filterSlice";
 
 interface IBook {
   id: string;
@@ -35,6 +37,11 @@ const AllBooks = () => {
   // console.log("DROPDOWNS", `${genre}${publicationYear}`);
   console.log("DROPDOWNS", queryString);
   console.log("BOOOOKKSS", books);
+  // useEffect(() => {
+  //   return () => {
+  //     resetQuery();
+  //   };
+  // }, []);
 
   return (
     <section className="wrapper  ">

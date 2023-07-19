@@ -20,12 +20,14 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 interface IFilter {
   queryString?: string;
   genre?: string;
+  searchItem?: string;
   publicationYear?: string;
 }
 // task to marge interface
 const initialState: IFilter = {
   queryString: "",
   genre: "",
+  searchItem: "",
   publicationYear: "",
 };
 
@@ -34,17 +36,28 @@ const filterSlice = createSlice({
   initialState,
   reducers: {
     createGenre: (state, action: PayloadAction<string>) => {
-      state.genre = "&genre" + "=" + action.payload;
+      state.genre = action.payload;
       state.queryString = state.genre + state.publicationYear;
     },
     createYear: (state, action: PayloadAction<string>) => {
       // console.log("STETE", state);
-      state.publicationYear = "&publicationDate" + "=" + action.payload;
+      state.publicationYear = action.payload;
       state.queryString = state.genre + state.publicationYear;
+    },
+    createSearch: (state, action: PayloadAction<string>) => {
+      // console.log("STETE", state);
+      state.searchItem = action.payload;
+      state.queryString = action.payload + state.genre + state.publicationYear;
+    },
+    resetQuery: (state) => {
+      // console.log("STETE", state);
+
+      state.queryString = "";
     },
   },
 });
 
-export const { createGenre, createYear } = filterSlice.actions;
+export const { createGenre, createYear, createSearch, resetQuery } =
+  filterSlice.actions;
 
 export default filterSlice.reducer;
