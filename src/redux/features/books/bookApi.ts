@@ -28,23 +28,6 @@ export const bookApi = apiSlice.injectEndpoints({
       providesTags: ["Books"],
     }),
 
-    // getFilteredBooks: builder.mutation({
-    //   query: (data) => ({
-    //     url: `/books?param=${data}`,
-    //     method: "GET",
-    //   }),
-    //   async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
-    //     try {
-    //       const result = await queryFulfilled;
-    //       console.log("RESULT", result);
-
-    //       dispatch(addBooks(result.data));
-    //     } catch (err) {
-    //       // do nothing
-    //     }
-    //   },
-    // }),
-
     getSingleBook: builder.query({
       query: (id) => `/books/${id}`,
       providesTags: (_result, _error, arg) => [{ type: "Book", id: arg }],

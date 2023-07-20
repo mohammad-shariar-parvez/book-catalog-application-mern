@@ -1,21 +1,24 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState } from "react";
 import NavLinks from "../Navlink";
 import { Link } from "react-router-dom";
 import Searchbar from "../Searchbar";
-import { useAppSelector } from "../../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+import { userLoggedOut } from "../../../redux/features/auth/authSlice";
 
 export default function Navbar() {
+  const dispath = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const { total } = useAppSelector((state) => state.wishList);
   const { total: futureTotal } = useAppSelector((state) => state.futureBooks);
   const [navbar, setNavbar] = useState(false);
 
-  const [isFixedVisible, setIsFixedVisible] = useState(false);
-
-  const handleButtonClick = () => {
-    setIsFixedVisible(!isFixedVisible);
+  const handleLogout = () => {
+    dispath(userLoggedOut());
+    localStorage.removeItem("auth");
   };
 
   const changeBackground = () => {
@@ -132,15 +135,30 @@ export default function Navbar() {
               >
                 {user?.name.lastName}
               </small>
-              <button
-                className={` ${
-                  navbar ? "  md:text-black " : "md:text-white"
-                }hover:text-white border border-golden hover:bg-golden focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-1.5 py-1.5 text-center   shadow  `}
-              >
-                <Link to="/login">{user?.email ? "Logout" : "Login"}</Link>
 
-                {/* <i class="bx bxs-log-in-circle"></i> */}
-              </button>
+              {user?.email && (
+                <button
+                  className={` ${
+                    navbar ? "  md:text-black " : "md:text-white"
+                  }hover:text-white border border-golden hover:bg-golden focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-1.5 py-1.5 text-center   shadow  `}
+                  onClick={handleLogout}
+                >
+                  <Link to="/login"> Logout</Link>
+
+                  {/* <i class="bx bxs-log-in-circle"></i> */}
+                </button>
+              )}
+              {!user?.email && (
+                <button
+                  className={` ${
+                    navbar ? "  md:text-black " : "md:text-white"
+                  }hover:text-white border border-golden hover:bg-golden focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-1.5 py-1.5 text-center   shadow  `}
+                >
+                  <Link to="/login"> Login</Link>
+
+                  {/* <i class="bx bxs-log-in-circle"></i> */}
+                </button>
+              )}
 
               {/* dropdown menus */}
               {/* <div className="hidden group-hover:block absolute w-full transition">
@@ -168,9 +186,6 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-      {isFixedVisible && (
-        <div className="mb-10 transition-opacity duration-200 ease-in-out"></div>
-      )}
     </>
   );
 }

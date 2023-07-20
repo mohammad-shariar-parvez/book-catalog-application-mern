@@ -6,6 +6,7 @@ import { useGetSingleBookQuery } from "../../redux/features/books/bookApi";
 import Loader from "../atoms/Loader";
 import ErrorMessage from "../atoms/Error";
 import BookDescription from "../books/BookDescription";
+import Header from "../Header";
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -36,7 +37,12 @@ const BookDetails = () => {
     );
   }
 
-  return <div>{content}</div>;
+  return (
+    <>
+      <Header />
+      <div>{content}</div>
+    </>
+  );
 };
 
 export default BookDetails;

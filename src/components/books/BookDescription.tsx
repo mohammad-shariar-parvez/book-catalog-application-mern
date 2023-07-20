@@ -59,15 +59,15 @@ const BookDescription = ({ book }: BookDescriptionProps) => {
         {showToast && <Toast message={"Book Deleted Successfully"} />}
         <Link
           to={`/${book?.id}`}
-          className="flex  items-center bg-white border border-gray-200 rounded-lg shadow flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700  "
+          className="flex flex-col items-center   shadow    "
         >
           <img
-            className="object-cover w-1/2 rounded-lg md:rounded-none md:rounded-l-lg h-48  md:h-auto md:w-1/2"
+            className="object-cover w-72 rounded-lg  rounded-l-lg h-auto "
             src="https://m.media-amazon.com/images/I/51Ga5GuElyL._SX331_BO1,204,203,200_.jpg"
             alt=""
           />
 
-          <div className="text-left text-lg p-3 flex-col  justify-between md:flex-col  self-start  ">
+          <div className="text-left text-lg p-3 flex-col  justify-between md:flex-col  self-start w-full  ">
             <h5 className="mb-2  ">{book?.title}</h5>
             <p>
               <span className="text-black font-semibold">Author:</span>
@@ -81,22 +81,22 @@ const BookDescription = ({ book }: BookDescriptionProps) => {
               <span className="text-black font-semibold">Publication Date</span>{" "}
               {book?.publicationDate}
             </p>
-            <div className="flex items-center space-x-6 justify-center ">
+            <div className="flex items-center space-x-6 justify-between w-full py-4 ">
               {user?.userId != book?.id && (
                 <Link
-                  className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80  "
+                  className="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
                   to={`/editBook/${book?.id}`}
                 >
-                  Edit Book
+                  Edit
                 </Link>
               )}
               {user?.userId != book?.id && (
                 <button
-                  className="rounded-lg  text-white  bg-golden p-2  hover:opacity-80  "
+                  className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2  "
                   // to={`/deleteBook/${book?.id}`}
                   onClick={handleDelete}
                 >
-                  Delete Book
+                  Delete
                 </button>
               )}
             </div>
