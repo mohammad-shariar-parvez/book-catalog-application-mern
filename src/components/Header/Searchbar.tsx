@@ -15,17 +15,18 @@ import {
   createYear,
 } from "../../redux/features/filter/filterSlice";
 
-const Searchbar = ({ value }: { value: boolean }) => {
+const Searchbar = () => {
   const { data: allBooks } = useGetAllBooksQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
-  const [realValue, setRealValue] = useState(value);
+
   const [showDropdownGenre, setShowDropdownGenre] = useState(false);
   const [showDropdownYear, setShowDropdownYear] = useState(false);
   const [searchItem, setSearchItem] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [confirm, setConfirm] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
-  console.log("VAAALUEE", value);
+
   console.log("SSHOOW DROPDOWN", showDropdown);
 
   const dispatch = useAppDispatch();
@@ -75,43 +76,45 @@ const Searchbar = ({ value }: { value: boolean }) => {
 
   useEffect(() => {
     // Event listener for 'scroll' event
-    if (value) {
-      const handleScroll = () => {
-        const currentScrollPos = window.scrollY;
-        const scrollUp = currentScrollPos > prevScrollPos;
 
-        setShowDropdown(scrollUp);
-        setPrevScrollPos(currentScrollPos);
-      };
+    console.log("yooo");
 
-      window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      const scrollUp = currentScrollPos > prevScrollPos;
 
-      // if (showDropdown) {
-      //   if (value) {
-      //     setShowDropdown(false);
-      //   }
-      // }
+      setShowDropdown(scrollUp);
+      setPrevScrollPos(currentScrollPos);
+    };
+    window.addEventListener("scroll", handleScroll);
 
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }
-  }, [prevScrollPos, value]);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [prevScrollPos]);
 
   const checkBar = () => {
+    setConfirm(!confirm);
     setShowDropdown(!showDropdown);
   };
+  console.log("showDropdown", showDropdown);
 
   return (
     <div className="relative">
-      <button onClick={checkBar}>HEllo</button>
+      <button
+        className=" md:text-white  nav-button
+      hover:text-yellow-500  items-center  shrink-0 p-3 py-4  fixed bottom-2 right-0 bg-red "
+        onClick={checkBar}
+      >
+        <i className="bx bx-search md:hidden text-3xl "></i>
+      </button>
       <form
         className={`md:static fixed top-16 left-0 right-0 p-2 bg-golden md:bg-inherit transition-opacity duration-200 ease-in-out md:opacity-100 pointer ${
-          !showDropdown ? "static" : "hidden"
-        }  ${value ? "static" : "hidden "}`}
+          !showDropdown ? "opacity-100" : "opacity-0"
+        }  `}
         onSubmit={submitSearch}
       >
-        <div className={`flex relative ${value ? "static" : "hidden "} `}>
+        <div className={`flex relative `}>
           <label
             htmlFor="search-dropdown"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"

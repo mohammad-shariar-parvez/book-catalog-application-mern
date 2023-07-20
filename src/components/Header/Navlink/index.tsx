@@ -18,6 +18,11 @@ const NavLinks = ({ value }: { value: boolean }) => {
       link: "/addBook",
       icon: "bx bx-book-add",
     },
+    {
+      name: "",
+      link: "",
+      icon: "",
+    },
   ];
 
   return (

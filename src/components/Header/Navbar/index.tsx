@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import NavLinks from "../Navlink";
 import { Link } from "react-router-dom";
 import Searchbar from "../Searchbar";
@@ -14,47 +15,27 @@ export default function Navbar() {
   const [isFixedVisible, setIsFixedVisible] = useState(false);
 
   const handleButtonClick = () => {
-    console.log("is fixed visible", isFixedVisible);
-
     setIsFixedVisible(!isFixedVisible);
   };
 
-  // const changeBackground = () => {
-  //   if (window.scrollY >= 5) {
-  //     setNavbar(true);
-  //   } else {
-  //     console.log("SCROLLL-----", window.scrollY);
-  //     setNavbar(false);
-  //   }
-  // };
+  const changeBackground = () => {
+    if (window.scrollY >= 5) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
 
-  // if (typeof window != "undefined") {
-  //   window.addEventListener("scroll", changeBackground);
-  // }
-
-  useEffect(() => {
-    // Event listener for 'scroll' event
-    const changeBackground = () => {
-      if (window.scrollY >= 5) {
-        setNavbar(true);
-      } else {
-        setNavbar(false);
-      }
-    };
+  if (typeof window != "undefined") {
     window.addEventListener("scroll", changeBackground);
-
-    // Cleanup function to remove the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("scroll", changeBackground);
-    };
-  }, [navbar]);
+  }
 
   return (
     <>
       <nav
         className={`${
           navbar
-            ? "md:bg-gradient-to-br from-purple-600 to-blue-500 md:fixed md:transition md:duration-300  top-0 left-0 right-0 md:ease-out md:shadow-lg "
+            ? "md:bg-indigo-500 md:fixed md:transition md:duration-300  top-0 left-0 right-0 md:ease-out md:shadow-lg "
             : "md:bg-gray-600 md:absolute md:top-[40px] border-gray-700 "
         } fixed top-0  md:border-b-[1px] bg-golden md:bg-none z-30 w-full `}
       >
@@ -66,7 +47,7 @@ export default function Navbar() {
           <div className="shrink-0">
             <Link
               className={`${
-                navbar ? "  md:text-golden " : "md:text-white"
+                navbar ? "  md:text-black " : "md:text-white"
               } font-semibold text-2xl text-white`}
               to="/"
             >
@@ -84,16 +65,10 @@ export default function Navbar() {
             </ul>
           </div>
 
-          <Searchbar value={isFixedVisible} />
+          <Searchbar />
 
           {/* Part */}
           <div className="ml-auto flex gap-3 items-center space-x-1 ">
-            <button
-              className="text-white       rounded-lg text-lg     "
-              onClick={handleButtonClick}
-            >
-              <i className="bx bx-search md:hidden"></i>
-            </button>
             <Link to="/wishList">
               <button
                 type="button"
@@ -148,6 +123,10 @@ export default function Navbar() {
               </button>
             </Link>
             <div className=" text-white  py-2 text-lg flex items-center gap-2 justify-center">
+              {/* <button type="button" className="">
+                <i className="bx bxs-user-circle"></i>
+              </button> */}
+
               <small
                 className={`${navbar ? "  md:text-black " : "md:text-white"}`}
               >
@@ -155,7 +134,7 @@ export default function Navbar() {
               </small>
               <button
                 className={` ${
-                  navbar ? "  md:text-golden " : ""
+                  navbar ? "  md:text-black " : "md:text-white"
                 }hover:text-white border border-golden hover:bg-golden focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-1.5 py-1.5 text-center   shadow  `}
               >
                 <Link to="/login">{user?.email ? "Logout" : "Login"}</Link>
