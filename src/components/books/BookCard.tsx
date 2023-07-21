@@ -7,6 +7,7 @@ import { useGetBooksWithFilterQuery } from "../../redux/features/books/bookApi";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { useEffect } from "react";
 import { resetQuery } from "../../redux/features/filter/filterSlice";
+import Loader from "../atoms/Loader";
 interface IBook {
   id: string;
   title: string;
@@ -24,7 +25,8 @@ interface IBook {
 
 const BookCard = () => {
   const { queryString } = useAppSelector((state) => state.filterCategory);
-  const { data: filteredBooks } = useGetBooksWithFilterQuery(queryString);
+  const { data: filteredBooks, isLoading } =
+    useGetBooksWithFilterQuery(queryString);
   const dispatch = useAppDispatch();
   // console.log("HOOOOOMEE", queryString);
   const firstTenBooks: IBook[] = filteredBooks
@@ -41,6 +43,7 @@ const BookCard = () => {
 
   return (
     <section className="wrapper  ">
+      {isLoading && <Loader />}
       <div className="grid grid-cols-1  md:grid-cols-2 gap-4 pt-24 md:pt-6 ">
         {firstTenBooks.map((book: IBook) => (
           <SingleCard key={book.id} book={book} />

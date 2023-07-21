@@ -15,6 +15,8 @@ import { useAppSelector } from "../../redux/hook";
 import Input from "../atoms/Input";
 import { useNavigate, useParams } from "react-router-dom";
 import Toast from "../atoms/Toaster";
+import Header from "../Header";
+import Loader from "../atoms/Loader";
 
 interface FormValues {
   title: string;
@@ -28,15 +30,13 @@ const EditBook = () => {
   const { id } = useParams();
   const { data: book } = useGetSingleBookQuery(id);
   const { user } = useAppSelector((state) => state.auth);
-  const [editBook, { data: editedbook, isSuccess: editedbookSuccess }] =
-    useEditBookMutation();
+  const [
+    editBook,
+    { data: editedbook, isSuccess: editedbookSuccess, isLoading },
+  ] = useEditBookMutation();
 
   const [formValues, setFormValues] = useState<Partial<FormValues>>(book?.data);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
-  const [showToast, setShowToast] = useState(false);
-
-  console.log("edited books", editedbook);
-  console.log("Book Success", editedbookSuccess);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,10 +49,9 @@ const EditBook = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (editedbookSuccess && editedbook?.data) {
-      setShowToast(true);
       const timer = setTimeout(() => {
         navigate("/");
-      }, 500);
+      }, 800);
       return () => {
         clearTimeout(timer);
       };
@@ -92,7 +91,6 @@ const EditBook = () => {
         userId: user?.id,
       },
     });
-    console.log("ussse state", formValues);
 
     // Reset form fields to initial values
     setFormValues(formValues);
@@ -103,8 +101,11 @@ const EditBook = () => {
   };
   return (
     <>
+      <Header />
+      {editedbookSuccess && (
+        <Toast message={"Book Updated Successfully"} color={"green"} />
+      )}
       <form onSubmit={handleSubmit} className="max-w-xs mx-auto py-10">
-        {showToast && <Toast message={"Book Added Successfully"} />}
         {/* {isError && <ErrorMessage message="Could not Update book"></ErrorMessage>} */}
         <div className="grid md:grid-cols-2 md:gap-6">
           <div className="relative z-0 w-full mb-6 group">
@@ -169,7 +170,7 @@ const EditBook = () => {
             type="submit"
             className="text-white bg-golden hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  "
           >
-            Sign in
+            Update
           </button>
 
           <button
@@ -181,6 +182,7 @@ const EditBook = () => {
           </button>
         </div>
       </form>
+      {isLoading && <Loader />}
     </>
   );
 };

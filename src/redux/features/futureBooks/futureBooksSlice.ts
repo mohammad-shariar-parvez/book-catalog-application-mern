@@ -33,12 +33,9 @@ const futureBooksSlice = createSlice({
   initialState,
   reducers: {
     addFutureBook: (state, action: PayloadAction<IBook>) => {
-      console.log(state);
-
       const existing = state.books.find(
         (book) => book.id === action.payload.id,
       );
-      // console.log("PAYLOAD ID ", action.payload.id, existing);
 
       if (!existing) {
         state.books.push({ ...action.payload });

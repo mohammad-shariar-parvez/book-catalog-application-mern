@@ -9,10 +9,13 @@ import { useAppDispatch } from "./redux/hook";
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const userData = JSON.parse(localStorage.getItem("auth") || "");
+  // Check if the data exists in localStorage
+  const storedData = localStorage.getItem("auth");
+  const userData = storedData
+    ? JSON.parse(storedData)
+    : { accessToken: null, user: null };
 
   if (userData?.accessToken && userData.user) {
-    console.log("User data local stoge", userData);
     dispatch(userLoggedIn(userData));
   }
   return <MainLayout />;

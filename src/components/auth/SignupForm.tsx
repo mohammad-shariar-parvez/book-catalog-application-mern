@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import Input from "../atoms/Input";
 import { useSignupMutation } from "../../redux/features/auth/authApi";
 import { useNavigate } from "react-router-dom";
+import ErrorMessage from "../atoms/Error";
+import Toast from "../atoms/Toaster";
+import Loader from "../atoms/Loader";
 
 interface FormValues {
   firstName: string;
@@ -22,8 +25,10 @@ const initialFormValues: FormValues = {
 };
 
 const SignupForm: React.FC = () => {
-  const [signup, { data, error: responseError, isSuccess }] =
-    useSignupMutation();
+  const [
+    signup,
+    { data, error: responseError, isSuccess, isError, isLoading },
+  ] = useSignupMutation();
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<Partial<FormValues>>({});
 
@@ -36,9 +41,15 @@ const SignupForm: React.FC = () => {
   };
 
   const navigate = useNavigate();
+
   useEffect(() => {
     if (isSuccess && data?.data) {
-      navigate("/login");
+      const timer = setTimeout(() => {
+        navigate("/login");
+      }, 1000);
+      return () => {
+        clearTimeout(timer);
+      };
     }
   }, [data, responseError, navigate, isSuccess]);
 
@@ -96,82 +107,89 @@ const SignupForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xs mx-auto">
-      <div className="grid md:grid-cols-2 md:gap-6">
-        <div className="relative z-0 w-full mb-6 group">
+    <>
+      <form onSubmit={handleSubmit} className="max-w-xs mx-auto">
+        <div className="grid md:grid-cols-2 md:gap-6">
+          <div className="relative z-0 w-full mb-6 group">
+            <Input
+              label="Firstname:"
+              name="firstName"
+              type="text"
+              value={formValues.firstName}
+              error={errors.firstName}
+              required
+              onChange={handleChange}
+            />
+          </div>
+          <div className="relative z-0 w-full mb-6 group">
+            <Input
+              label="LastName:"
+              name="lastName"
+              type="text"
+              value={formValues.lastName}
+              error={errors.lastName}
+              required
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div>
           <Input
-            label="Firstname:"
-            name="firstName"
-            type="text"
-            value={formValues.firstName}
-            error={errors.firstName}
+            label="Email:"
+            name="email"
+            type="email"
+            value={formValues.email}
+            error={errors.email}
             required
             onChange={handleChange}
           />
         </div>
         <div className="relative z-0 w-full mb-6 group">
           <Input
-            label="LastName:"
-            name="lastName"
-            type="text"
-            value={formValues.lastName}
-            error={errors.lastName}
+            label="Password:"
+            name="password"
+            type="password"
+            value={formValues.password}
+            error={errors.password}
             required
             onChange={handleChange}
           />
         </div>
-      </div>
-      <div>
-        <Input
-          label="Email:"
-          name="email"
-          type="email"
-          value={formValues.email}
-          error={errors.email}
-          required
-          onChange={handleChange}
-        />
-      </div>
-      <div className="relative z-0 w-full mb-6 group">
-        <Input
-          label="Password:"
-          name="password"
-          type="password"
-          value={formValues.password}
-          error={errors.password}
-          required
-          onChange={handleChange}
-        />
-      </div>
-      <div className="relative z-0 w-full mb-6 group">
-        <Input
-          label="Confirm Password:"
-          name="confirmPassword"
-          type="password"
-          value={formValues.confirmPassword}
-          error={errors.confirmPassword}
-          required
-          onChange={handleChange}
-        />
-      </div>
+        <div className="relative z-0 w-full mb-6 group">
+          <Input
+            label="Confirm Password:"
+            name="confirmPassword"
+            type="password"
+            value={formValues.confirmPassword}
+            error={errors.confirmPassword}
+            required
+            onChange={handleChange}
+          />
+        </div>
 
-      <div className="gap-x-6 space-x-6">
-        <button
-          type="submit"
-          className="text-white bg-golden hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  "
-        >
-          Sign in
-        </button>
+        <div className="gap-x-6 space-x-6">
+          <button
+            type="submit"
+            className="text-white bg-golden hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  "
+          >
+            Sign in
+          </button>
 
-        <button
-          type="button"
-          onClick={handleReset}
-          className="text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
-        >
-          Reset
-        </button>
-      </div>
-    </form>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+      {isSuccess && (
+        <Toast message={"Account Created Successfully"} color={"green"} />
+      )}
+      {isError && <Toast message={"Could not Signin"} color={"red"} />}
+      {isLoading && <Loader />}
+    </>
   );
 };
 

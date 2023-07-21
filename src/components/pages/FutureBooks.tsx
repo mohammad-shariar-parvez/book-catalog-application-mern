@@ -17,7 +17,6 @@ interface IBook {
 
 const FutureBooks = () => {
   const { books } = useAppSelector((state) => state.futureBooks);
-  console.log("YA", books);
 
   return (
     <div>

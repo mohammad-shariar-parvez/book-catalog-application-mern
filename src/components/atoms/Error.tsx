@@ -6,8 +6,10 @@ interface ErrorMessageProps {
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
   return (
-    <div className="bg-red-500 text-white font-semibold p-4 rounded">
-      {message}
+    <div className="flex items-center my-1">
+      <div className="relative bg-red-200 max-w-xl px-4 py-2 text-red-800 rounded shadow w-full">
+        <span className="block text-sm">{message}</span>
+      </div>
     </div>
   );
 };

@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import SingleCard from "../books/SingleCard";
 import { resetQuery } from "../../redux/features/filter/filterSlice";
 import Header from "../Header";
+import Loader from "../atoms/Loader";
 
 interface IBook {
   id: string;
@@ -29,7 +30,8 @@ interface IBook {
 
 const AllBooks = () => {
   const { queryString } = useAppSelector((state) => state.filterCategory);
-  const { data: filteredBooks } = useGetBooksWithFilterQuery(queryString);
+  const { data: filteredBooks, isLoading } =
+    useGetBooksWithFilterQuery(queryString);
   const dispatch = useAppDispatch();
   const books: IBook[] = filteredBooks ? filteredBooks["data"] : [];
 
@@ -39,14 +41,13 @@ const AllBooks = () => {
   // console.log("DROPDOWNS", queryString);
   useEffect(() => {
     return () => {
-      console.log("USEE EFFECT WORKS");
-
       dispatch(resetQuery());
     };
   }, [dispatch]);
 
   return (
     <>
+      {isLoading && <Loader />}
       <Header />
       <h1 className="text-center">All Books</h1>
       <section className="wrapper   ">

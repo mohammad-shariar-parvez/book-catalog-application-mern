@@ -16,13 +16,13 @@ interface User {
   userId: string;
 }
 interface AuthState {
-  accessToken?: string;
-  user?: User;
+  accessToken?: string | null;
+  user?: User | null;
 }
 
 const initialState: AuthState = {
-  accessToken: undefined,
-  user: undefined,
+  accessToken: null,
+  user: null,
 };
 
 const authSlice = createSlice({
@@ -37,10 +37,8 @@ const authSlice = createSlice({
       state.user = action.payload.user;
     },
     userLoggedOut: (state) => {
-      console.log("KKKKAAAJJ HOISE");
-
-      state.accessToken = undefined;
-      state.user = undefined;
+      state.accessToken = null;
+      state.user = null;
     },
   },
 });

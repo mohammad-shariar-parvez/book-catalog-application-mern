@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -12,6 +13,7 @@ import {
   addFutureBook,
   removeFutureBook,
 } from "../../redux/features/futureBooks/futureBooksSlice";
+import { useEditBookMutation } from "../../redux/features/books/bookApi";
 
 interface IBook {
   id: string;
@@ -35,10 +37,13 @@ interface IProps {
 
 const SingleCard = ({ book, wishList, futureBooks }: IProps) => {
   const dispatch = useAppDispatch();
-
   const [finsih, setFinish] = useState(false);
+  const [isWishList, setIsWishList] = useState(false);
+  const [isFutureList, setIsFutureList] = useState(false);
+
   const handleWishList = () => {
     dispatch(addBookWishList(book));
+    setIsWishList(true);
   };
   const handleRemove = () => {
     dispatch(removeBookWishList(book));
@@ -46,6 +51,7 @@ const SingleCard = ({ book, wishList, futureBooks }: IProps) => {
 
   const handleFutureBooks = () => {
     dispatch(addFutureBook(book));
+    setIsFutureList(true);
   };
   const handleRemoveFutureBooks = () => {
     dispatch(removeFutureBook(book));
@@ -54,8 +60,6 @@ const SingleCard = ({ book, wishList, futureBooks }: IProps) => {
   const handleBookFinished = () => {
     setFinish(true);
   };
-
-  // console.log("WIISDH ", wishList);
 
   return (
     <div className=" ">
@@ -73,15 +77,19 @@ const SingleCard = ({ book, wishList, futureBooks }: IProps) => {
             <div>
               {finsih && (
                 <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
-                  Green
+                  Finished
                 </span>
               )}
             </div>
 
             <div className=" flex justify-end text-lg space-x-2">
               {!futureBooks && !wishList && (
-                <button onClick={handleWishList}>
-                  <i className=" text-2xl text-gray-400 bx bx-book-heart "></i>
+                <button onClick={handleWishList} disabled={isWishList}>
+                  <i
+                    className={`text-2xl text-gray-500 bx bx-book-heart ${
+                      isWishList && "text-gray-300"
+                    } `}
+                  ></i>
                 </button>
               )}
               {wishList && (
@@ -90,8 +98,12 @@ const SingleCard = ({ book, wishList, futureBooks }: IProps) => {
                 </button>
               )}
               {!futureBooks && !wishList && (
-                <button onClick={handleFutureBooks}>
-                  <i className="text-gray-400 text-2xl bx bx-book-open  "></i>
+                <button onClick={handleFutureBooks} disabled={isFutureList}>
+                  <i
+                    className={`text-gray-500 text-2xl bx bx-book-open ${
+                      isFutureList && "text-gray-300"
+                    } `}
+                  ></i>
                 </button>
               )}
               {futureBooks && (
@@ -101,7 +113,11 @@ const SingleCard = ({ book, wishList, futureBooks }: IProps) => {
               )}
               {futureBooks && (
                 <button onClick={handleBookFinished} disabled={finsih}>
-                  <i className="text-green-500 text-2xl bx bxs-check-square  "></i>
+                  <i
+                    className={`text-green-500 text-2xl bx bxs-check-square ${
+                      finsih && "text-green-300"
+                    }`}
+                  ></i>
                 </button>
               )}
             </div>

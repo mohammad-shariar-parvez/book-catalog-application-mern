@@ -27,8 +27,6 @@ const Searchbar = () => {
   const [confirm, setConfirm] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
 
-  console.log("SSHOOW DROPDOWN", showDropdown);
-
   const dispatch = useAppDispatch();
 
   const uniqueGenres = [
@@ -77,8 +75,6 @@ const Searchbar = () => {
   useEffect(() => {
     // Event listener for 'scroll' event
 
-    console.log("yooo");
-
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
       const scrollUp = currentScrollPos > prevScrollPos;
@@ -97,7 +93,6 @@ const Searchbar = () => {
     setConfirm(!confirm);
     setShowDropdown(!showDropdown);
   };
-  console.log("showDropdown", showDropdown);
 
   return (
     <div className="relative">
