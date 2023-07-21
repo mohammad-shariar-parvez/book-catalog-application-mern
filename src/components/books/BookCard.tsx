@@ -41,6 +41,11 @@ const BookCard = () => {
 
   return (
     <section className="wrapper  ">
+      {firstTenBooks.length == 0 && (
+        <div className="text-center">
+          <h3>No Books Found</h3>
+        </div>
+      )}
       {isLoading && <Loader />}
       <div className="grid grid-cols-1  md:grid-cols-2 gap-4 pt-24 md:pt-6 ">
         {firstTenBooks.map((book: IBook) => (

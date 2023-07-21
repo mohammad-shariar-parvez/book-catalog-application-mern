@@ -49,7 +49,7 @@ const Searchbar = () => {
   };
   const handleToggleYear = () => {
     setShowDropdownYear((prevState) => !prevState);
-    if (showDropdownGenre) {
+    if (showDropdownYear) {
       dispatch(createYear(""));
     }
   };
