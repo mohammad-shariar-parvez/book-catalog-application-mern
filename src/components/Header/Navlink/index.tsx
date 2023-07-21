@@ -6,12 +6,12 @@ const NavLinks = ({ value }: { value: boolean }) => {
     {
       name: "Home",
       link: "/",
-      icon: "bx bx-info-circle",
+      icon: "bx bx-home-alt",
     },
     {
       name: "All Books",
       link: "/allbooks",
-      icon: "bx bx-home-alt",
+      icon: "  bx bx-info-circle",
     },
     {
       name: "Add Book",

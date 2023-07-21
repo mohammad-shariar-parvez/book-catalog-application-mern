@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import ErrorMessage from "../atoms/Error";
 import LoginForm from "../auth/LoginForn";
 import Navbar from "../Header/Navbar";
 import { Link } from "react-router-dom";
 
+import { useLocation } from "react-router-dom";
 const Login = () => {
+  const location = useLocation();
+
   return (
     <>
       <Navbar />

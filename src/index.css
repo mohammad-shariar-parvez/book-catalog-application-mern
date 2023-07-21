@@ -72,7 +72,7 @@
 }
 
 .wrapper {
-  @apply md:max-w-6xl mx-auto  p-4 pb-32
+  @apply md:max-w-6xl mx-auto  p-4 pb-20
 }
 
 .container{

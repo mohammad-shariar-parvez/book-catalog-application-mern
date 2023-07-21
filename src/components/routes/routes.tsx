@@ -22,7 +22,11 @@ const routes = createBrowserRouter([
       },
       {
         path: "/allbooks",
-        element: <AllBooks />,
+        element: (
+          <PrivateRoute>
+            <AllBooks />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/:id",

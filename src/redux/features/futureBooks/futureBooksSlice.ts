@@ -41,6 +41,14 @@ const futureBooksSlice = createSlice({
         state.books.push({ ...action.payload });
         state.total += 1;
       }
+
+      localStorage.setItem(
+        "futueBooks",
+        JSON.stringify({
+          books: state.books,
+          total: state.total,
+        }),
+      );
     },
 
     removeFutureBook: (state, action: PayloadAction<IBook>) => {
@@ -48,10 +56,23 @@ const futureBooksSlice = createSlice({
         (product) => product.id !== action.payload.id,
       );
       state.total -= 1;
+
+      localStorage.setItem(
+        "futueBooks",
+        JSON.stringify({
+          books: state.books,
+          total: state.total,
+        }),
+      );
+    },
+    lStorgeFutureBooks: (state, action: PayloadAction<ICart>) => {
+      state.books = action.payload.books;
+      state.total = action.payload.total;
     },
   },
 });
 
-export const { addFutureBook, removeFutureBook } = futureBooksSlice.actions;
+export const { addFutureBook, removeFutureBook, lStorgeFutureBooks } =
+  futureBooksSlice.actions;
 
 export default futureBooksSlice.reducer;

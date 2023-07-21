@@ -12,9 +12,6 @@ const BookDetails = () => {
   const { id } = useParams();
   const { data: book, isLoading, isError } = useGetSingleBookQuery(id);
 
-  // console.log("VIDEO id", id);
-  // console.log("VIDEO SINGLEEE", book);
-
   let content = null;
   if (isLoading) {
     content = (

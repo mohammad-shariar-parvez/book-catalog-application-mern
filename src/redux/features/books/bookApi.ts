@@ -10,16 +10,6 @@ export const bookApi = apiSlice.injectEndpoints({
     getAllBooks: builder.query({
       query: () => "/books",
 
-      // async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
-      //   try {
-      //     const result = await queryFulfilled;
-      //     // console.log("RESULT isss", result.data["data"]);
-      //     dispatch(createDropDown(result.data["data"]));
-      //   } catch (err) {
-      //     // console.log("EEEEOOORRR");
-      //     // do nothing
-      //   }
-      // },
       providesTags: ["AllBooks"],
     }),
 

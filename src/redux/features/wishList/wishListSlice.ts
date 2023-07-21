@@ -41,6 +41,14 @@ const wishListSlice = createSlice({
         state.books.push({ ...action.payload });
         state.total += 1;
       }
+
+      localStorage.setItem(
+        "wishList",
+        JSON.stringify({
+          books: state.books,
+          total: state.total,
+        }),
+      );
     },
 
     removeBookWishList: (state, action: PayloadAction<IBook>) => {
@@ -48,10 +56,22 @@ const wishListSlice = createSlice({
         (product) => product.id !== action.payload.id,
       );
       state.total -= 1;
+      localStorage.setItem(
+        "wishList",
+        JSON.stringify({
+          books: state.books,
+          total: state.total,
+        }),
+      );
+    },
+    lStorgeWishList: (state, action: PayloadAction<ICart>) => {
+      state.books = action.payload.books;
+      state.total = action.payload.total;
     },
   },
 });
 
-export const { addBookWishList, removeBookWishList } = wishListSlice.actions;
+export const { addBookWishList, removeBookWishList, lStorgeWishList } =
+  wishListSlice.actions;
 
 export default wishListSlice.reducer;

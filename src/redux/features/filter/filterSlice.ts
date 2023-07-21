@@ -40,17 +40,14 @@ const filterSlice = createSlice({
       state.queryString = state.genre + state.publicationYear;
     },
     createYear: (state, action: PayloadAction<string>) => {
-      // console.log("STETE", state);
       state.publicationYear = action.payload;
       state.queryString = state.genre + state.publicationYear;
     },
     createSearch: (state, action: PayloadAction<string>) => {
-      // console.log("STETE", state);
       state.searchItem = action.payload;
       state.queryString = action.payload + state.genre + state.publicationYear;
     },
     resetQuery: (state) => {
-      // console.log("STETE", state);
       state.queryString = "";
     },
   },

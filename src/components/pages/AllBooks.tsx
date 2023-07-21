@@ -35,10 +35,6 @@ const AllBooks = () => {
   const dispatch = useAppDispatch();
   const books: IBook[] = filteredBooks ? filteredBooks["data"] : [];
 
-  // console.log("Global book", filteredBooks);
-  // console.log("QUERY", queryString);
-  // console.log("DROPDOWNS", `${genre}${publicationYear}`);
-  // console.log("DROPDOWNS", queryString);
   useEffect(() => {
     return () => {
       dispatch(resetQuery());
@@ -49,7 +45,7 @@ const AllBooks = () => {
     <>
       {isLoading && <Loader />}
       <Header />
-      <h1 className="text-center">All Books</h1>
+
       <section className="wrapper   ">
         {books.length == 0 && (
           <div className="text-center">

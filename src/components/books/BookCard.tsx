@@ -28,15 +28,13 @@ const BookCard = () => {
   const { data: filteredBooks, isLoading } =
     useGetBooksWithFilterQuery(queryString);
   const dispatch = useAppDispatch();
-  // console.log("HOOOOOMEE", queryString);
+
   const firstTenBooks: IBook[] = filteredBooks
     ? filteredBooks.data.slice(0, 10)
     : [];
 
   useEffect(() => {
     return () => {
-      // console.log("USEE EFFECT WORKS");
-
       dispatch(resetQuery());
     };
   }, [dispatch]);

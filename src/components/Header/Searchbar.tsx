@@ -98,13 +98,13 @@ const Searchbar = () => {
     <div className="relative">
       <button
         className=" md:text-white  nav-button
-      hover:text-yellow-500  items-center  shrink-0 p-3 py-4  fixed bottom-2 right-0 bg-red "
+      hover:text-yellow-500  items-center  shrink-0 p-3 py-4  fixed bottom-1 right-0 bg-red "
         onClick={checkBar}
       >
         <i className="bx bx-search md:hidden text-3xl "></i>
       </button>
       <form
-        className={`md:static fixed top-16 left-0 right-0 p-2 bg-golden md:bg-inherit transition-opacity duration-200 ease-in-out md:opacity-100 pointer ${
+        className={`md:static fixed top-16 left-0 right-0 p-2 bg-golden md:bg-inherit transition-opacity duration-200 ease-in-out  pointer ${
           !showDropdown ? "opacity-100" : "opacity-0"
         }  `}
         onSubmit={submitSearch}

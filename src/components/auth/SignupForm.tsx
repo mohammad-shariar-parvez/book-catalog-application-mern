@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Input from "../atoms/Input";
 import { useSignupMutation } from "../../redux/features/auth/authApi";
 import { useNavigate } from "react-router-dom";
-import ErrorMessage from "../atoms/Error";
 import Toast from "../atoms/Toaster";
 import Loader from "../atoms/Loader";
 
@@ -83,8 +82,6 @@ const SignupForm: React.FC = () => {
       return;
     }
 
-    // console.log("Registration form submitted:", formValues);
-
     //send to reducer
 
     void signup({
@@ -108,7 +105,7 @@ const SignupForm: React.FC = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="max-w-xs mx-auto">
+      <form onSubmit={handleSubmit} className="max-w-xs mx-auto ">
         <div className="grid md:grid-cols-2 md:gap-6">
           <div className="relative z-0 w-full mb-6 group">
             <Input

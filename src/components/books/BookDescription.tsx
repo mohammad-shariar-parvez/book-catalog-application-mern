@@ -35,16 +35,13 @@ interface BookDescriptionProps {
 const BookDescription = ({ book }: BookDescriptionProps) => {
   const { user } = useAppSelector((state) => state.auth);
   const [deleteBook, { isSuccess, isError }] = useDeleteBookMutation();
-  const [editBook, { isSuccess: editedBookSuccess, isError: editedbookError }] =
-    useEditBookMutation();
+  const [editBook, { isError: editedbookError }] = useEditBookMutation();
   const [showToast, setShowToast] = useState(false);
   const [errorToast, setErrorToast] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
 
   const [inputValue, setInputValue] = useState("");
-
-  console.log(user?.id, book.userId);
 
   const handleComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
@@ -254,7 +251,7 @@ const BookDescription = ({ book }: BookDescriptionProps) => {
       {editedbookError && <ErrorMessage message="Could not post comment" />}
       {/* -------ADD COMMENTS FINISH */}
       <div className=" py-11 left-8 ">
-        <h2>User Reviews</h2>
+        <h3>User Reviews</h3>
         <div className="space-y-4 pt-8">
           {book.reviews
             .slice(-10)

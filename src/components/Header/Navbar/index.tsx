@@ -4,7 +4,8 @@
 
 import { useState } from "react";
 import NavLinks from "../Navlink";
-import { Link } from "react-router-dom";
+
+import { Link, useLocation } from "react-router-dom";
 import Searchbar from "../Searchbar";
 import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { userLoggedOut } from "../../../redux/features/auth/authSlice";
@@ -15,6 +16,7 @@ export default function Navbar() {
   const { total } = useAppSelector((state) => state.wishList);
   const { total: futureTotal } = useAppSelector((state) => state.futureBooks);
   const [navbar, setNavbar] = useState(false);
+  const location = useLocation();
 
   const handleLogout = () => {
     dispath(userLoggedOut());
@@ -50,7 +52,7 @@ export default function Navbar() {
           <div className="shrink-0">
             <Link
               className={`${
-                navbar ? "  md:text-black " : "md:text-white"
+                navbar ? "  md:text-golden " : "md:text-white"
               } font-semibold text-2xl text-white`}
               to="/"
             >
@@ -68,7 +70,9 @@ export default function Navbar() {
             </ul>
           </div>
 
-          <Searchbar />
+          {(location.pathname == "/" || location.pathname == "/allbooks") && (
+            <Searchbar />
+          )}
 
           {/* Part */}
           <div className="ml-auto flex gap-3 items-center space-x-1 ">

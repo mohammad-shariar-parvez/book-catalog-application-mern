@@ -11,7 +11,7 @@ import { useAppSelector } from "../../redux/hook";
 import Input from "../atoms/Input";
 import { useNavigate } from "react-router-dom";
 import Toast from "../atoms/Toaster";
-import ErrorMessage from "../atoms/Error";
+import Header from "../Header";
 
 interface FormValues {
   title: string;
@@ -49,8 +49,7 @@ const AddBook = () => {
     if (isSuccess && book?.data) {
       navigate("/");
     }
-  }, [navigate, isSuccess]);
-  //   console.log("ussse state", formValues);
+  }, [navigate, isSuccess, book?.data]);
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -91,11 +90,15 @@ const AddBook = () => {
   };
   return (
     <>
+      <Header />
       {isSuccess && (
         <Toast message={"Book Added Successfully"} color={"green"} />
       )}
       {isError && <Toast message={"Could not Add book"} color={"red"}></Toast>}
-      <form onSubmit={handleSubmit} className="max-w-xs mx-auto py-10">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-xs mx-auto py-28 md:py-10 "
+      >
         <div className="grid md:grid-cols-2 md:gap-6">
           <div className="relative z-0 w-full mb-6 group">
             <Input
@@ -154,18 +157,18 @@ const AddBook = () => {
           />
         </div>
 
-        <div className="gap-x-6 space-x-6">
+        <div className="gap-x-6 space-x-6 flex  ">
           <button
             type="submit"
-            className="text-white bg-golden hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  "
+            className="text-white bg-golden hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center "
           >
-            Sign in
+            Add book
           </button>
 
           <button
             type="button"
             onClick={handleReset}
-            className="text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
+            className="text-white bg-gray-400 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center  "
           >
             Reset
           </button>

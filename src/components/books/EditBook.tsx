@@ -57,7 +57,6 @@ const EditBook = () => {
       };
     }
   }, [navigate, editedbookSuccess, editedbook?.data]);
-  // console.log("ussse state", editedbookSuccess);
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();

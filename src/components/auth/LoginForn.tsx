@@ -6,7 +6,6 @@ import React, { useState, useEffect } from "react";
 import Input from "../atoms/Input";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useLocation, useNavigate } from "react-router-dom";
-import ErrorMessage from "../atoms/Error";
 import Toast from "../atoms/Toaster";
 
 interface FormValues {
@@ -35,7 +34,7 @@ const LoginForm: React.FC = () => {
       [name]: value,
     }));
   };
-  console.log("IIIIS EEERROR", isError);
+
   useEffect(() => {
     if (isSuccess && data?.data && location.state?.from) {
       navigate(location.state.from);
