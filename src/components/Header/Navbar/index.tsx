@@ -9,6 +9,8 @@ import { Link, useLocation } from "react-router-dom";
 import Searchbar from "../Searchbar";
 import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { userLoggedOut } from "../../../redux/features/auth/authSlice";
+import { lStorgeFutureBooks } from "../../../redux/features/futureBooks/futureBooksSlice";
+import { lStorgeWishList } from "../../../redux/features/wishList/wishListSlice";
 
 export default function Navbar() {
   const dispath = useAppDispatch();
@@ -20,7 +22,11 @@ export default function Navbar() {
 
   const handleLogout = () => {
     dispath(userLoggedOut());
+    dispath(lStorgeFutureBooks({ books: [], total: 0 }));
+    dispath(lStorgeWishList({ books: [], total: 0 }));
     localStorage.removeItem("auth");
+    localStorage.removeItem("wishList");
+    localStorage.removeItem("futueBooks");
   };
 
   const changeBackground = () => {

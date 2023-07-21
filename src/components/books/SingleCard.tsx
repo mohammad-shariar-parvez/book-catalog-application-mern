@@ -43,7 +43,6 @@ const SingleCard = ({ book, wishList, futureBooks }: IProps) => {
   const [finsih, setFinish] = useState(false);
   const [isWishList, setIsWishList] = useState(false);
   const [isFutureList, setIsFutureList] = useState(false);
-  console.log("Book", book);
 
   useEffect(() => {
     // Perform the state update inside the useEffect hook
