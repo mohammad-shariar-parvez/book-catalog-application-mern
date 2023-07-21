@@ -5,10 +5,7 @@ import LoginForm from "../auth/LoginForn";
 import Navbar from "../Header/Navbar";
 import { Link } from "react-router-dom";
 
-import { useLocation } from "react-router-dom";
 const Login = () => {
-  const location = useLocation();
-
   return (
     <>
       <Navbar />
