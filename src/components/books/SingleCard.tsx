@@ -43,6 +43,7 @@ const SingleCard = ({ book, wishList, futureBooks }: IProps) => {
   const [finsih, setFinish] = useState(false);
   const [isWishList, setIsWishList] = useState(false);
   const [isFutureList, setIsFutureList] = useState(false);
+  console.log("Book", book);
 
   useEffect(() => {
     // Perform the state update inside the useEffect hook
@@ -81,7 +82,7 @@ const SingleCard = ({ book, wishList, futureBooks }: IProps) => {
         <Link to={`/${book.id}`}>
           <img
             className="object-cover    rounded-l-lg h-48  md:h-auto w-48"
-            src="https://m.media-amazon.com/images/I/51Ga5GuElyL._SX331_BO1,204,203,200_.jpg"
+            src={book.image}
             alt=""
           />
         </Link>

@@ -114,7 +114,7 @@ const BookDescription = ({ book }: BookDescriptionProps) => {
         >
           <img
             className="object-cover w-72 rounded-lg  rounded-l-lg h-auto "
-            src="https://m.media-amazon.com/images/I/51Ga5GuElyL._SX331_BO1,204,203,200_.jpg"
+            src={book.image}
             alt=""
           />
 
